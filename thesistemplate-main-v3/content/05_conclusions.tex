@@ -15,14 +15,14 @@ ResNet-50 attained the highest building type accuracy, but this result was influ
 InternVL3-2B without parameter updating did not provide sufficient accuracy for the three attribute tasks in the evaluated setup.
 
 Objective~2 quantified how errors in predicted building type and construction year affect TABULA-NL archetype assignment and the associated thermal parameters.
-DINOv2 and ResNet-50 achieved joint cell accuracies of 0.825 and 0.826, respectively, but the majority cell baseline already reached 0.790.
-Their macro cell recalls of 0.180 and 0.128 show that the high overall agreement was concentrated in frequent combinations of building type and construction period rather than distributed across the occupied archetype cells.
+DINOv2 and ResNet-50 achieved joint cell accuracies of 0.826 and 0.827, respectively, but the majority cell baseline already reached 0.791.
+Their macro cell recalls of 0.189 and 0.135 show that the high overall agreement was concentrated in frequent combinations of building type and construction period rather than distributed across the occupied archetype cells.
 The errors also changed the assigned thermal parameters.
-Relative to calculations based on reference cells, the cells assigned from DINOv2 and ResNet-50 predictions produced aggregate transmission heat transfer coefficients that were 10.0\% and 10.5\% higher, while InternVL3-2B produced a value 16.6\% higher.
+Relative to calculations based on reference cells, the cells assigned from DINOv2 and ResNet-50 predictions produced aggregate transmission heat transfer coefficients that were 9.8\% and 10.2\% higher, while InternVL3-2B produced a value 16.6\% higher.
 These comparisons quantify the effect of attribute errors on archetype assignment, but they do not validate the assigned parameters against measured envelope properties or heat demand.
 
 Objective~3 determined how the source of building information affects registered energy class prediction.
-Changing from reference attributes to DINOv2 predicted attributes reduced binary macro F1 by only 0.002, but reduced seven-class macro F1 by 0.022.
+Changing from reference attributes to DINOv2 predicted attributes reduced binary macro F1 by only 0.002, but reduced seven-class macro F1 by 0.019.
 The small binary difference does not indicate reliable classification because both attribute conditions had low recall for classes D to G.
 Direct image prediction with DINOv2 achieved the highest macro F1 for both targets, reaching 0.597 for the binary task and 0.213 for the seven-class task.
 This result indicates that the images contain information relevant to the registered energy class that is not represented by building type, construction year, floor count, and the corresponding TABULA-NL U-values alone.
@@ -51,6 +51,6 @@ Predicted building type and construction year are used to assign the joint arche
 This structure separates attribute prediction errors from their effects on cell agreement, assigned thermal parameters, and aggregate transmission heat transfer.
 
 \textbf{The third contribution is a controlled comparison of information sources for energy class prediction.}
-Reference and predicted building attributes are compared on the 2,016-building comparison subset using the same fitted classifier.
+Reference and predicted building attributes are compared on the 2,014-building evaluation set using the same fitted classifier.
 Direct image prediction is evaluated as a separate procedure that does not produce intermediate building attributes.
 The comparison therefore shows how energy class results change with the source and representation of building information, while feature ablation identifies the contribution of the structured inputs.

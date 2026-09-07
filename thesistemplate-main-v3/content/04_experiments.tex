@@ -276,19 +276,19 @@ Experiment I compares the three vision configurations for all three attributes. 
 		\toprule
 		Vision configuration & Type accuracy & Type macro F1 & Year MAE & Year $R^2$ & Period accuracy & Floor MAE & Floor $R^2$ \\
 		\midrule
-		DINOv2, frozen backbone & 0.901 & \textbf{0.520} & \textbf{9.45} & \textbf{0.679} & \textbf{0.901} & \textbf{0.377} & \textbf{0.569} \\
-		ResNet-50, full fine tuning & \textbf{0.915} & 0.492 & 11.82 & 0.549 & 0.892 & 0.428 & 0.551 \\
-		InternVL3-2B, no parameter update & 0.495 & 0.246 & 30.65 & $-0.543$ & 0.769 & 0.708 & 0.042 \\
+		DINOv2, frozen backbone & 0.902 & \textbf{0.522} & \textbf{9.40} & \textbf{0.681} & \textbf{0.902} & \textbf{0.375} & \textbf{0.558} \\
+		ResNet-50, full fine tuning & \textbf{0.916} & 0.495 & 11.75 & 0.551 & 0.893 & 0.425 & 0.542 \\
+		InternVL3-2B, no parameter update & 0.495 & 0.246 & 30.65 & $-0.547$ & 0.769 & 0.708 & 0.010 \\
 		\bottomrule
 	\end{tblr}
 	\par\vspace{0.4em}
 	\begin{minipage}{\linewidth}
-		\footnotesize\textit{Note.} The holdout set contains 2,018 buildings. DINOv2 and ResNet-50 metrics use all 2,018 buildings. InternVL3-2B metrics use 2,016 buildings because the model did not return a valid building-level record for two buildings. Year MAE is reported in years and floor MAE in floors.
+		\footnotesize\textit{Note.} All metrics are computed on the 2,014-building evaluation set. Year MAE is reported in years and floor MAE in floors.
 	\end{minipage}
 \end{table}
 
 \paragraph{E1a: Building type.}
-ResNet-50 and DINOv2 differed by 0.014 in accuracy but their ordering reversed for macro F1. Figure~\ref{fig:type_confusion} shows that both configurations recalled more than 0.92 of the AB buildings and none of the 12 MFH buildings. DINOv2 recalled 0.774 of TH and 0.538 of SFH, while ResNet-50 recalled 0.711 and 0.308. The gap between accuracy and macro F1 therefore coincided with uneven recall across the four classes.
+ResNet-50 and DINOv2 differed by 0.014 in accuracy but their ordering reversed for macro F1. Figure~\ref{fig:type_confusion} shows that both configurations recalled more than 0.92 of the AB buildings and none of the 12 MFH buildings. DINOv2 recalled 0.774 of TH and 0.560 of SFH, while ResNet-50 recalled 0.711 and 0.320. The gap between accuracy and macro F1 therefore coincided with uneven recall across the four classes.
 
 \begin{figure}[htbp]
 	\centering
@@ -298,10 +298,10 @@ ResNet-50 and DINOv2 differed by 0.014 in accuracy but their ordering reversed f
 \end{figure}
 
 \paragraph{E1b: Construction year and TABULA period.}
-DINOv2 attained a year MAE of 9.45 years and an $R^2$ of 0.679, compared with 11.82 years and 0.549 for ResNet-50. InternVL3-2B had a year MAE of 30.65 years and a negative $R^2$. After mapping years to the six TABULA-NL periods, the corresponding period accuracies were 0.901, 0.892, and 0.769. Figure~\ref{fig:year_floor_scatter} shows that the largest deviations for the trained configurations occurred among newer buildings, whose predicted years were often earlier than their reference years.
+DINOv2 attained a year MAE of 9.40 years and an $R^2$ of 0.681, compared with 11.75 years and 0.551 for ResNet-50. InternVL3-2B had a year MAE of 30.65 years and a negative $R^2$. After mapping years to the six TABULA-NL periods, the corresponding period accuracies were 0.902, 0.893, and 0.769. Figure~\ref{fig:year_floor_scatter} shows that the largest deviations for the trained configurations occurred among newer buildings, whose predicted years were often earlier than their reference years.
 
 \paragraph{E1c: Floor count.}
-Floor count MAE was 0.377 for DINOv2, 0.428 for ResNet-50, and 0.708 for InternVL3-2B. Their $R^2$ values were 0.569, 0.551, and 0.042, respectively. The reference floor counts were concentrated between two and six, as shown in Figure~\ref{fig:year_floor_scatter}.
+Floor count MAE was 0.375 for DINOv2, 0.425 for ResNet-50, and 0.708 for InternVL3-2B. Their $R^2$ values were 0.558, 0.542, and 0.010, respectively. The reference floor counts were concentrated between two and six, as shown in Figure~\ref{fig:year_floor_scatter}.
 
 \begin{figure}[htbp]
 	\centering
@@ -325,7 +325,7 @@ Experiment I therefore records a consistent overall ordering across the three co
 \label{sec:joint_cell_assignment}
 
 \paragraph{E2a: Joint archetype cell assignment.}
-Table~\ref{tab:joint_cell} reports the joint cell results. DINOv2 and ResNet-50 reached joint accuracies of 0.825 and 0.826. The uniform expectation was 0.042, but the majority cell baseline was 0.790 because 1,595 of the 2,018 holdout buildings occupied AB\,\textbar\,NL.01. The improvement over the majority cell baseline was therefore 0.035 for DINOv2 and 0.036 for ResNet-50. InternVL3-2B reached 0.341 on its 2,016 valid predictions.
+Table~\ref{tab:joint_cell} reports the joint cell results. DINOv2 and ResNet-50 reached joint accuracies of 0.826 and 0.827. The uniform expectation was 0.042, but the majority cell baseline was 0.791 because 1,594 of the 2,014 evaluated buildings occupied AB\,\textbar\,NL.01. The improvement over the majority cell baseline was therefore 0.035 for DINOv2 and 0.035 for ResNet-50. InternVL3-2B reached 0.342.
 
 \begin{table}[htbp]
 	\centering
@@ -342,18 +342,18 @@ Table~\ref{tab:joint_cell} reports the joint cell results. DINOv2 and ResNet-50 
 		\toprule
 		Vision configuration & Joint accuracy & Macro cell recall \\
 		\midrule
-		DINOv2, frozen backbone & 0.825 & \textbf{0.180} \\
-		ResNet-50, full fine tuning & \textbf{0.826} & 0.128 \\
-		InternVL3-2B, no parameter update & 0.341 & 0.168 \\
+		DINOv2, frozen backbone & 0.826 & \textbf{0.189} \\
+		ResNet-50, full fine tuning & \textbf{0.827} & 0.135 \\
+		InternVL3-2B, no parameter update & 0.342 & 0.168 \\
 		\bottomrule
 	\end{tblr}
 	\par\vspace{0.4em}
 	\begin{minipage}{\linewidth}
-		\footnotesize\textit{Note.} The holdout set contains 2,018 buildings. DINOv2 and ResNet-50 use all buildings, while InternVL3-2B uses 2,016 valid predictions. Expected uniform accuracy is 0.042. Majority cell accuracy is 0.790 for the holdout set and 0.791 for the InternVL3-2B subset.
+		\footnotesize\textit{Note.} All metrics are computed on the 2,014-building evaluation set. Expected uniform accuracy is 0.042. Majority cell accuracy is 0.791.
 	\end{minipage}
 \end{table}
 
-Macro cell recall was 0.180 for DINOv2, 0.128 for ResNet-50, and 0.168 for InternVL3-2B. Figure~\ref{fig:cell_recall} shows that DINOv2 recalled 0.932 of AB\,\textbar\,NL.01 and 0.789 of TH\,\textbar\,NL.01, while recall for most cells after 1964 did not exceed 0.25. All MFH cells had zero recall. InternVL3-2B recovered some cells with one or two observations, which increased its macro cell recall despite its lower joint accuracy.
+Macro cell recall was 0.189 for DINOv2, 0.135 for ResNet-50, and 0.168 for InternVL3-2B. Figure~\ref{fig:cell_recall} shows that DINOv2 recalled 0.932 of AB\,\textbar\,NL.01 and 0.789 of TH\,\textbar\,NL.01, while recall for most cells after 1964 did not exceed 0.25. All MFH cells had zero recall. InternVL3-2B recovered some cells with one or two observations, which increased its macro cell recall despite its lower joint accuracy.
 
 \begin{figure}[htbp]
 	\centering
@@ -363,7 +363,7 @@ Macro cell recall was 0.180 for DINOv2, 0.128 for ResNet-50, and 0.168 for Inter
 \end{figure}
 
 \paragraph{E2b: Thermal consequences of cell assignment.}
-Table~\ref{tab:htr_metrics} reports the difference between $h_{tr}$ values calculated from predicted and reference cells at $\mathrm{WWR}=0.25$. DINOv2 had an MAE of 0.150\,$\mathrm{W/(K\,m^2)}$ and an $R^2$ of 0.806. The corresponding values were 0.157 and 0.771 for ResNet-50, and 0.474 and 0.439 for InternVL3-2B. The separation in MAE between DINOv2 and InternVL3-2B was a factor of 3.2.
+Table~\ref{tab:htr_metrics} reports the difference between $h_{tr}$ values calculated from predicted and reference cells at $\mathrm{WWR}=0.25$. DINOv2 had an MAE of 0.149\,$\mathrm{W/(K\,m^2)}$ and an $R^2$ of 0.810. The corresponding values were 0.155 and 0.775 for ResNet-50, and 0.474 and 0.439 for InternVL3-2B. The separation in MAE between DINOv2 and InternVL3-2B was a factor of 3.2.
 
 \begin{table}[htbp]
 	\centering
@@ -380,32 +380,32 @@ Table~\ref{tab:htr_metrics} reports the difference between $h_{tr}$ values calcu
 		\toprule
 		Vision configuration & $h_{tr}$ MAE ($\mathrm{W/(K\,m^2)}$) & $h_{tr}$ $R^2$ & Floor-area-weighted relative difference \\
 		\midrule
-		DINOv2, frozen backbone & \textbf{0.150} & \textbf{0.806} & $+10.0$\% \\
-		ResNet-50, full fine tuning & 0.157 & 0.771 & $+10.5$\% \\
+		DINOv2, frozen backbone & \textbf{0.149} & \textbf{0.810} & $+9.8$\% \\
+		ResNet-50, full fine tuning & 0.155 & 0.775 & $+10.2$\% \\
 		InternVL3-2B, no parameter update & 0.474 & 0.439 & $+16.6$\% \\
 		\bottomrule
 	\end{tblr}
 	\par\vspace{0.4em}
 	\begin{minipage}{\linewidth}
-		\footnotesize\textit{Note.} The holdout set contains 2,018 buildings. Valid reconstructed areas were available for 2,016 DINOv2 and ResNet-50 records and 2,014 InternVL3-2B records.
+		\footnotesize\textit{Note.} All metrics are computed on the 2,014-building evaluation set.
 	\end{minipage}
 \end{table}
 
-All three configurations produced a positive floor-area-weighted relative difference from the reference cell calculations. The values ranged from $+10.0$\% for DINOv2 to $+16.6$\% for InternVL3-2B. Repeating the calculation at WWR values of 0.15, 0.25, and 0.35 left the ranking unchanged. The DINOv2 and ResNet-50 MAEs were 0.150 and 0.157 at all three WWR values at the reported precision, while the InternVL3-2B MAE changed from 0.495 to 0.453. Table~\ref{tab:wwr_sensitivity} reports the complete sensitivity results.
+All three configurations produced a positive floor-area-weighted relative difference from the reference cell calculations. The values ranged from $+9.8$\% for DINOv2 to $+16.6$\% for InternVL3-2B. Repeating the calculation at WWR values of 0.15, 0.25, and 0.35 left the ranking unchanged. The DINOv2 and ResNet-50 MAEs were 0.149 and 0.155 at all three WWR values at the reported precision, while the InternVL3-2B MAE changed from 0.495 to 0.453. Table~\ref{tab:wwr_sensitivity} reports the complete sensitivity results.
 
 Experiment II therefore shows that similar overall joint accuracy for the two trained configurations corresponded to similar thermal differences, while the lower InternVL3-2B joint accuracy coincided with a substantially larger $h_{tr}$ difference.
 
 \subsection{Experiment III Results: Energy Class Prediction}
 \label{sec:energy_class_condition_comparison}
 
-Experiment III compares all energy class prediction conditions on the 2,016-building comparison subset. Results for the primary binary target are presented first, followed by the seven-class target and feature contribution analysis.
+Experiment III compares all energy class prediction conditions on the 2,014-building evaluation set. Results for the primary binary target are presented first, followed by the seven-class target and feature contribution analysis.
 
 \paragraph{E3a: Binary energy class prediction.}
-Table~\ref{tab:binary_conditions} reports the default threshold results. Direct image prediction with DINOv2 attained the highest macro F1 at 0.597 and the highest macro recall at 0.600. Direct image prediction with ResNet-50 followed with a macro F1 of 0.566. The reference attribute condition reached 0.492, while predicted attributes from DINOv2 and ResNet-50 reached 0.490 and 0.488.
+Table~\ref{tab:binary_conditions} reports the default threshold results. Direct image prediction with DINOv2 attained the highest macro F1 at 0.597 and the highest macro recall at 0.601. Direct image prediction with ResNet-50 followed with a macro F1 of 0.566. The reference attribute condition reached 0.492, while predicted attributes from DINOv2 and ResNet-50 reached 0.490 and 0.488.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Binary energy class prediction on the comparison subset ($n=2{,}016$).}
+	\caption{Binary energy class prediction on the evaluation set ($n=2{,}014$).}
 	\label{tab:binary_conditions}
 	\footnotesize
 	\begin{tblr}{
@@ -420,12 +420,12 @@ Table~\ref{tab:binary_conditions} reports the default threshold results. Direct 
 		\midrule
 		Uniform random & Analytic expectation & 0.500 & 0.500 & 0.479 \\
 		Reference attribute condition & LightGBM & \textbf{0.612} & 0.529 & 0.492 \\
-		Direct image condition & DINOv2 & 0.595 & \textbf{0.600} & \textbf{0.597} \\
+		Direct image condition & DINOv2 & 0.595 & \textbf{0.601} & \textbf{0.597} \\
 		Direct image condition & ResNet-50 & 0.566 & 0.566 & 0.566 \\
 		Direct image condition & InternVL3-2B & 0.149 & 0.500 & 0.230 \\
 		Predicted attribute condition & DINOv2 & 0.566 & 0.522 & 0.490 \\
-		Predicted attribute condition & ResNet-50 & 0.550 & 0.519 & 0.488 \\
-		Predicted attribute condition & InternVL3-2B & 0.527 & 0.528 & 0.528 \\
+		Predicted attribute condition & ResNet-50 & 0.550 & 0.518 & 0.488 \\
+		Predicted attribute condition & InternVL3-2B & 0.527 & 0.528 & 0.527 \\
 		\bottomrule
 	\end{tblr}
 \end{table}
@@ -433,11 +433,11 @@ Table~\ref{tab:binary_conditions} reports the default threshold results. Direct 
 The reference attribute condition recalled 96.0\% of classes A to C but 9.8\% of classes D to G. Predicted attributes from DINOv2 and ResNet-50 produced similar recalls of 10.8\% and 11.0\% for classes D to G. Direct DINOv2 increased recall for this group to 46.9\%. Direct InternVL3-2B assigned every building to classes D to G, so its macro F1 of 0.230 reflected a constant prediction rather than discrimination among buildings. Table~\ref{tab:binary_perclass} reports precision, recall, and F1 for both class groups.
 
 \paragraph{E3b: Seven-class energy prediction.}
-Table~\ref{tab:sevenclass_conditions} reports results for classes A to G. Direct DINOv2 attained the highest macro F1 at 0.213, followed by direct ResNet-50 at 0.201. The reference attribute condition reached 0.172 and the three predicted attribute conditions ranged from 0.137 to 0.150. The metric ranking differed for exact and $\pm1$ accuracy, for which the reference attribute condition attained the highest values of 0.356 and 0.655.
+Table~\ref{tab:sevenclass_conditions} reports results for classes A to G. Direct DINOv2 attained the highest macro F1 at 0.213, followed by direct ResNet-50 at 0.201. The reference attribute condition reached 0.171 and the three predicted attribute conditions ranged from 0.131 to 0.151. The metric ranking differed for exact and $\pm1$ accuracy, for which the reference attribute condition attained the highest values of 0.358 and 0.660.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Seven-class energy class prediction on the comparison subset ($n=2{,}016$).}
+	\caption{Seven-class energy class prediction on the evaluation set ($n=2{,}014$).}
 	\label{tab:sevenclass_conditions}
 	\small
 	\begin{tblr}{
@@ -451,18 +451,18 @@ Table~\ref{tab:sevenclass_conditions} reports results for classes A to G. Direct
 		Condition & Vision configuration & Macro F1 & Exact accuracy & $\pm1$ accuracy \\
 		\midrule
 		Uniform random & Analytic expectation & 0.127 & 0.143 & 0.390 \\
-		Reference attribute condition & LightGBM & 0.172 & \textbf{0.356} & \textbf{0.655} \\
+		Reference attribute condition & LightGBM & 0.171 & \textbf{0.358} & \textbf{0.660} \\
 		Direct image condition & DINOv2 & \textbf{0.213} & 0.266 & 0.544 \\
 		Direct image condition & ResNet-50 & 0.201 & 0.263 & 0.570 \\
 		Direct image condition & InternVL3-2B & 0.015 & 0.046 & 0.167 \\
-		Predicted attribute condition & DINOv2 & 0.150 & 0.292 & 0.589 \\
-		Predicted attribute condition & ResNet-50 & 0.149 & 0.282 & 0.587 \\
-		Predicted attribute condition & InternVL3-2B & 0.137 & 0.278 & 0.591 \\
+		Predicted attribute condition & DINOv2 & 0.151 & 0.297 & 0.589 \\
+		Predicted attribute condition & ResNet-50 & 0.148 & 0.284 & 0.588 \\
+		Predicted attribute condition & InternVL3-2B & 0.131 & 0.277 & 0.596 \\
 		\bottomrule
 	\end{tblr}
 \end{table}
 
-Only the reference attribute condition exceeded the majority baseline of 0.612 for $\pm1$ accuracy. Direct InternVL3-2B predicted class F for approximately 99\% of the comparison subset and consequently remained below the uniform expectation for all three seven-class metrics. These results close the main comparison by showing that condition ranking depends on both target resolution and evaluation metric.
+Only the reference attribute condition exceeded the majority baseline of 0.612 for $\pm1$ accuracy. Direct InternVL3-2B predicted class F for approximately 99\% of the evaluation set and consequently remained below the uniform expectation for all three seven-class metrics. These results close the main comparison by showing that condition ranking depends on both target resolution and evaluation metric.
 
 \paragraph{E3c: Feature contribution analysis.}
 The leave-one-out results in Table~\ref{tab:feature_ablation} identify construction year as the largest contributor among the eight inputs of the reference attribute classifier. Removing year reduced macro F1 by 0.032 for the seven-class target and 0.030 for the binary target. Removing the four TABULA U-values changed macro F1 by less than 0.003 in either target. Adding all four clean reconstructed geometry features increased macro F1 by 0.039 for the seven-class target and 0.104 for the binary target.
@@ -498,7 +498,7 @@ The leave-one-out results in Table~\ref{tab:feature_ablation} identify construct
 	\end{minipage}
 \end{table}
 
-Experiment III therefore yields three principal findings. Direct DINOv2 produced the highest macro F1 for both energy class targets. Replacing reference attributes with predicted building attributes changed binary macro F1 by less than 0.005 but reduced seven-class macro F1 by approximately 0.022. The feature analysis identifies construction year as the strongest contributor among the structured inputs and shows that clean reconstructed geometry adds information not captured by the main input set.
+Experiment III therefore yields three principal findings. Direct DINOv2 produced the highest macro F1 for both energy class targets. Replacing reference attributes with predicted building attributes changed binary macro F1 by less than 0.005 but reduced seven-class macro F1 by approximately 0.019. The feature analysis identifies construction year as the strongest contributor among the structured inputs and shows that clean reconstructed geometry adds information not captured by the main input set.
 
 \section{Discussion}
 \label{sec:discussion}
@@ -509,11 +509,11 @@ The three experiments answer different points in the same information chain. Exp
 
 DINOv2 with a frozen backbone provided the most consistent attribute results, despite updating fewer parameters than the fully fine-tuned ResNet-50. ResNet-50 attained higher type accuracy because it performed strongly on the dominant AB class, but DINOv2 attained higher macro F1 and higher recall for SFH and TH. This difference confirms that accuracy alone is not an adequate summary for the present type distribution. The result supports use of a frozen self-supervised representation when labelled development data are limited, but it does not isolate the effect of pretraining from architecture or aggregation because the experiment compares complete configurations.
 
-Construction year was the strongest continuous prediction target for DINOv2, with an $R^2$ of 0.679. This value is close to the 0.710 reported by \textcite{liang2025} for a fully fine-tuned InternVL3-2B model, but the datasets, label sources, and training procedures differ, so the values are not a direct benchmark. The negative $R^2$ of the InternVL3-2B configuration in this study instead shows that prompting without parameter updates did not recover building-level year variation among the evaluated Dutch buildings. The selected examples further suggest that visibility, occlusion, and viewpoint are relevant failure conditions, although a systematic image quality experiment would be required to quantify their effects.
+Construction year was the strongest continuous prediction target for DINOv2, with an $R^2$ of 0.681. This value is close to the 0.710 reported by \textcite{liang2025} for a fully fine-tuned InternVL3-2B model, but the datasets, label sources, and training procedures differ, so the values are not a direct benchmark. The negative $R^2$ of the InternVL3-2B configuration in this study instead shows that prompting without parameter updates did not recover building-level year variation among the evaluated Dutch buildings. The selected examples further suggest that visibility, occlusion, and viewpoint are relevant failure conditions, although a systematic image quality experiment would be required to quantify their effects.
 
 \subsection{Archetype Assignment and Thermal Consequences}
 
-The joint cell result requires interpretation against both baselines. Joint accuracies above 0.82 appear high relative to uniform assignment, but the majority cell alone reaches 0.790 because the holdout is dominated by old apartment blocks. Macro cell recall below 0.18 shows that the trained configurations had low recall for less frequent combinations of building type and construction period. This finding is consistent with earlier studies that identified building type and construction period as important sources of error in energy models based on archetypes \parencite{dochev2020,bass2022}. The present experiment adds a comparison in which predicted and reference building attributes refer to the same building records.
+The joint cell result requires interpretation against both baselines. Joint accuracies above 0.82 appear high relative to uniform assignment, but the majority cell alone reaches 0.791 because the holdout is dominated by old apartment blocks. Macro cell recall below 0.18 shows that the trained configurations had low recall for less frequent combinations of building type and construction period. This finding is consistent with earlier studies that identified building type and construction period as important sources of error in energy models based on archetypes \parencite{dochev2020,bass2022}. The present experiment adds a comparison in which predicted and reference building attributes refer to the same building records.
 
 The $h_{tr}$ comparison distinguishes cell errors by their thermal consequence. It separated DINOv2 from InternVL3-2B more clearly than joint accuracy. All three predicted cell sets produced higher aggregate transmission heat transfer coefficients than the reference assignments. The construction year scatter provides a plausible explanation: several newer buildings were assigned to earlier periods with higher representative U-values. This explanation is consistent with the observed prediction pattern, but the analysis does not establish that the reference archetype values equal the measured envelope properties of those buildings.
 
