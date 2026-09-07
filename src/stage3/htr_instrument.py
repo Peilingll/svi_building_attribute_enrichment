@@ -31,6 +31,8 @@ Output: reports/tables/stage3/T7_htr_instrument.md
 
 import logging
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -92,11 +94,13 @@ def boot_ci(x: np.ndarray, stat, n=N_BOOT, seed=SEED):
     return float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))
 
 
-def main():
+def main(restrict: set[str] | None = None, out_path: Path | None = None):
     tab = pd.read_csv(PROCESSED / "tabula_nl.csv")
     tab["key"] = tab["building_type"] + "|" + tab["period"]
     U = tab.set_index("key")[["u_wall", "u_roof", "u_floor", "u_window"]]
     geo = load_geometry()
+    if restrict is not None:
+        geo = geo[geo["pand_id"].isin(restrict)].reset_index(drop=True)
 
     L = ["# T7 — H_tr instrument: scoring cell predictions by physical consequence", "",
          "The per-building EPC label cannot resolve Stage-1 quality (audit A06: its full "
@@ -192,10 +196,20 @@ def main():
           "archetype — see A06, which shows the archetype chain explains only R²=0.215 of "
           "measured demand and that no downstream metric can close that gap.", ""]
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text("\n".join(L), encoding="utf-8")
-    logger.info("wrote %s", OUT)
+    target = out_path or OUT
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("\n".join(L), encoding="utf-8")
+    logger.info("wrote %s", target)
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--restrict", type=Path, default=None,
+                    help="parquet with pand_id column; evaluate only those buildings")
+    ap.add_argument("--out", type=Path, default=None)
+    a = ap.parse_args()
+    ids = None
+    if a.restrict is not None:
+        ids = set(pd.read_parquet(a.restrict)["pand_id"].astype(str).str.zfill(16))
+    main(ids, a.out)

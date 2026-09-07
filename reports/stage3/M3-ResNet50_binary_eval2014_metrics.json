@@ -1,0 +1,68 @@
+{
+  "task": "binary",
+  "n_eval": 2014,
+  "macro_f1": 0.4878,
+  "quadratic_kappa": 0.0465,
+  "accuracy": 0.6832,
+  "balanced_accuracy": 0.5185,
+  "mcc": 0.0609,
+  "roc_auc": 0.57,
+  "pr_auc": 0.346,
+  "per_class": {
+    "A-C": {
+      "precision": 0.71,
+      "recall": 0.9271,
+      "f1": 0.8042,
+      "support": 1413
+    },
+    "D-G": {
+      "precision": 0.3905,
+      "recall": 0.1098,
+      "f1": 0.1714,
+      "support": 601
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "A-C",
+      "D-G"
+    ],
+    "matrix": [
+      [
+        1310,
+        103
+      ],
+      [
+        535,
+        66
+      ]
+    ]
+  },
+  "bootstrap_95ci": {
+    "macro_f1": {
+      "mean": 0.486556958300975,
+      "lo": 0.4658,
+      "hi": 0.508,
+      "n_boot_valid": 1000
+    },
+    "quadratic_kappa": {
+      "mean": 0.044956651253434204,
+      "lo": 0.0099,
+      "hi": 0.0818,
+      "n_boot_valid": 1000
+    },
+    "balanced_accuracy": {
+      "mean": 0.5178347984659777,
+      "lo": 0.5039,
+      "hi": 0.5324,
+      "n_boot_valid": 1000
+    },
+    "roc_auc": {
+      "mean": 0.56891387256415,
+      "lo": 0.5409,
+      "hi": 0.5954,
+      "n_boot_valid": 1000
+    }
+  },
+  "route": "M3-ResNet50"
+}

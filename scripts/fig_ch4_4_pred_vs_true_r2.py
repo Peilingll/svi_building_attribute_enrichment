@@ -24,7 +24,7 @@ import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _stage1_plot import setup_mpl, CITY_LABELS, CITY_PALETTE  # noqa: E402
+from _stage1_plot import setup_mpl, CITY_LABELS, CITY_PALETTE, eval_restrict, apply_restrict  # noqa: E402
 
 OUT_DIR = REPO / "reports" / "figures" / "ch4"
 
@@ -80,10 +80,11 @@ def _panel(ax, y_true, y_pred, lims, title=None, boundaries=None, jitter=0.0,
 
 def main() -> None:
     setup_mpl()
+    ids, sfx = eval_restrict()
     fig, axes = plt.subplots(2, 3, figsize=(10.5, 7.4))
 
     for col, (name, path) in enumerate(MODELS.items()):
-        df = pd.read_parquet(REPO / path)
+        df = apply_restrict(pd.read_parquet(REPO / path), ids)
 
         year = df[["pred_year", "true_bouwjaar"]].dropna()
         _panel(axes[0, col], year["true_bouwjaar"].to_numpy(), year["pred_year"].to_numpy(),
@@ -102,7 +103,7 @@ def main() -> None:
     fig.tight_layout()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for ext in ("png", "pdf"):
-        out = OUT_DIR / f"F4_3_pred_vs_true_r2.{ext}"
+        out = OUT_DIR / f"F4_3_pred_vs_true_r2{sfx}.{ext}"
         fig.savefig(out)
         print(f"[fig] {out.relative_to(REPO)}")
 

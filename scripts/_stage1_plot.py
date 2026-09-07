@@ -166,3 +166,26 @@ def provenance_table(paths: Iterable[Path]) -> pd.DataFrame:
         else:
             rows.append({"file": str(p), "size_kb": None, "mtime": "MISSING"})
     return pd.DataFrame(rows)
+
+
+def eval_restrict(argv=None):
+    """Parse optional `--restrict PATH` and `--suffix STR` from argv.
+
+    Returns (set of pand_id or None, suffix string). Used by the chapter 4
+    figure scripts to redraw on the 2,014-building evaluation set.
+    """
+    import sys as _sys
+    argv = list(_sys.argv[1:] if argv is None else argv)
+    ids, sfx = None, ""
+    if "--restrict" in argv:
+        path = Path(argv[argv.index("--restrict") + 1])
+        ids = set(pd.read_parquet(path)["pand_id"].astype(str).str.zfill(16))
+    if "--suffix" in argv:
+        sfx = argv[argv.index("--suffix") + 1]
+    return ids, sfx
+
+
+def apply_restrict(df: pd.DataFrame, ids) -> pd.DataFrame:
+    if ids is None:
+        return df
+    return df[df["pand_id"].astype(str).str.zfill(16).isin(ids)].reset_index(drop=True)

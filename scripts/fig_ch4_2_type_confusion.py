@@ -19,7 +19,7 @@ import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _stage1_plot import setup_mpl  # noqa: E402
+from _stage1_plot import setup_mpl, eval_restrict, apply_restrict  # noqa: E402
 
 OUT_DIR = REPO / "reports" / "figures" / "ch4"
 TYPES = ["SFH", "TH", "MFH", "AB"]
@@ -33,10 +33,11 @@ MODELS = {
 
 def main() -> None:
     setup_mpl()
+    ids, sfx = eval_restrict()
     fig, axes = plt.subplots(1, 3, figsize=(11.5, 4.0))
 
     for ax, (name, path) in zip(axes, MODELS.items()):
-        df = pd.read_parquet(REPO / path)[["true_type", "pred_type"]].dropna()
+        df = apply_restrict(pd.read_parquet(REPO / path), ids)[["true_type", "pred_type"]].dropna()
         cm = np.zeros((4, 4), dtype=int)
         for i, t in enumerate(TYPES):
             for j, p in enumerate(TYPES):
@@ -60,7 +61,7 @@ def main() -> None:
     fig.tight_layout()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for ext in ("png", "pdf"):
-        out = OUT_DIR / f"F4_2_type_confusion.{ext}"
+        out = OUT_DIR / f"F4_2_type_confusion{sfx}.{ext}"
         fig.savefig(out)
         print(f"[fig] {out.relative_to(REPO)}")
 

@@ -39,8 +39,11 @@ BLUE, ORANGE, INK, NODE = "#0065BD", "#E37222", "#1F2A37", "#4B5563"
 FONT = 11
 
 
-def flows(path: Path) -> np.ndarray:
-    df = pd.read_parquet(path).dropna(subset=["true_bouwjaar", "pred_year"])
+def flows(path: Path, ids=None) -> np.ndarray:
+    df = pd.read_parquet(path)
+    if ids is not None:
+        df = df[df["pand_id"].astype(str).str.zfill(16).isin(ids)]
+    df = df.dropna(subset=["true_bouwjaar", "pred_year"])
     tp = df["true_bouwjaar"].map(lambda y: classify_period(int(y)))
     pp = df["pred_year"].map(lambda y: classify_period(int(round(y))))
     m = np.zeros((6, 6), dtype=int)
@@ -124,10 +127,15 @@ def draw_panel(ax, m: np.ndarray, title: str):
 
 
 def main():
+    ids, sfx = None, ""
+    if "--restrict" in sys.argv:
+        ids = set(pd.read_parquet(sys.argv[sys.argv.index("--restrict") + 1])["pand_id"].astype(str).str.zfill(16))
+    if "--suffix" in sys.argv:
+        sfx = sys.argv[sys.argv.index("--suffix") + 1]
     plt.rcParams.update({"font.family": ["Arial", "Helvetica", "DejaVu Sans"], "font.size": FONT})
     fig, axes = plt.subplots(3, 1, figsize=(6.6, 10.2))
     for ax, (name, path) in zip(axes, MODELS.items()):
-        draw_panel(ax, flows(REPO / path), name)
+        draw_panel(ax, flows(REPO / path, ids), name)
     # shared legend
     from matplotlib.patches import Patch
     fig.legend(handles=[Patch(color=BLUE, alpha=0.55, label="same period as reference"),
@@ -136,9 +144,9 @@ def main():
                bbox_to_anchor=(0.5, 0.005))
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT_DIR / "F4_3_period_sankey.png", dpi=300, facecolor="white")
-    fig.savefig(OUT_DIR / "F4_3_period_sankey.svg", facecolor="white")
-    print("saved", OUT_DIR / "F4_3_period_sankey.png")
+    fig.savefig(OUT_DIR / f"F4_3_period_sankey{sfx}.png", dpi=300, facecolor="white")
+    fig.savefig(OUT_DIR / f"F4_3_period_sankey{sfx}.svg", facecolor="white")
+    print("saved", OUT_DIR / f"F4_3_period_sankey{sfx}.png")
 
 
 if __name__ == "__main__":

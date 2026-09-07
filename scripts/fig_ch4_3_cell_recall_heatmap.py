@@ -23,7 +23,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
-from _stage1_plot import setup_mpl  # noqa: E402
+from _stage1_plot import setup_mpl, eval_restrict, apply_restrict  # noqa: E402
 from src.tabula_matcher import classify_period  # noqa: E402
 
 OUT_DIR = REPO / "reports" / "figures" / "ch4"
@@ -41,13 +41,14 @@ MODELS = {
 
 def main(vertical: bool = False) -> None:
     setup_mpl()
+    ids, sfx = eval_restrict()
     if vertical:
         fig, axes = plt.subplots(1, 3, figsize=(10.5, 5.6))
     else:
         fig, axes = plt.subplots(1, 3, figsize=(12.5, 4.2))
 
     for ax, (name, path) in zip(axes, MODELS.items()):
-        df = pd.read_parquet(REPO / path)
+        df = apply_restrict(pd.read_parquet(REPO / path), ids)
         df = df.dropna(subset=["true_type", "pred_type", "true_bouwjaar", "pred_year"])
         true_p = df["true_bouwjaar"].map(lambda y: classify_period(int(y)))
         pred_p = df["pred_year"].map(lambda y: classify_period(int(round(y))))
@@ -96,7 +97,7 @@ def main(vertical: bool = False) -> None:
 
     fig.tight_layout()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    stem = "F4_3_cell_recall_heatmap" + ("_vertical" if vertical else "")
+    stem = "F4_3_cell_recall_heatmap" + ("_vertical" if vertical else "") + sfx
     for ext in ("png", "pdf"):
         out = OUT_DIR / f"{stem}.{ext}"
         fig.savefig(out)

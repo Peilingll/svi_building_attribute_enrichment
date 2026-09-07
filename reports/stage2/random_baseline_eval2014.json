@@ -1,0 +1,18 @@
+{
+  "evaluation_set": {
+    "n": 2014,
+    "seven_class": {
+      "accuracy": 0.1429,
+      "macro_f1": 0.1274,
+      "within_1_accuracy": 0.3904
+    },
+    "binary": {
+      "accuracy_at_0.5": 0.5,
+      "macro_f1_at_0.5": 0.4788,
+      "macro_f1_at_rate": 0.5,
+      "roc_auc": 0.5,
+      "positive_prevalence": 0.2984
+    }
+  },
+  "rate_from_dev": 0.2966
+}
