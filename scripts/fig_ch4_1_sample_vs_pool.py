@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "notebooks"))
+sys.path.insert(0, str(REPO / "scripts"))
 from _stage1_plot import setup_mpl, CITY_LABELS, PERIOD_LABELS, TYPE_LABELS  # noqa: E402
 
 OUT_DIR = REPO / "reports" / "figures" / "ch4"

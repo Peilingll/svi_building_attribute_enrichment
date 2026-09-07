@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "notebooks"))
+sys.path.insert(0, str(REPO / "scripts"))
 from _stage1_plot import (  # noqa: E402
     setup_mpl, CITY_LABELS, PERIOD_LABELS, TYPE_LABELS, TYPE_PALETTE,
 )

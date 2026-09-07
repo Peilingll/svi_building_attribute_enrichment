@@ -21,7 +21,7 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "notebooks"))
+sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 from _stage1_plot import setup_mpl  # noqa: E402
 from src.tabula_matcher import classify_period  # noqa: E402

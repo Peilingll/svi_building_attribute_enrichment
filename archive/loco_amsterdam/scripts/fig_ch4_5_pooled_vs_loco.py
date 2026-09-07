@@ -24,7 +24,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "notebooks"))
+sys.path.insert(0, str(REPO / "scripts"))
 from _stage1_plot import setup_mpl  # noqa: E402
 
 OUT_DIR = REPO / "reports" / "figures" / "ch4"
