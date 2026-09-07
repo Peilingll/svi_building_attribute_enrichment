@@ -1,0 +1,14 @@
+sha256_prefix: 18f0a26c58012ff9
+n_buildings:   2014
+n_holdout:     2018
+n_excluded:    4
+derived_from:  data/processed/holdout_test_pand_ids.parquet
+created_with:  src/stage1/evaluation_set.py
+
+excluded_no_valid_internvl3_record:
+  0599100000240334
+  0599100000647213
+excluded_no_valid_3dbag_areas:
+  0363100012160228
+  0599100000700053
+excluded_both: none
