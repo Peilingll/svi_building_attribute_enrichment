@@ -83,4 +83,5 @@ archive/
 
 # Codex scratch files and the thesis QA dump
 .codex-tmp/
+.uv-cache-codex/
 thesistemplate-main-v3/thesis_qa.txt
