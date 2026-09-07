@@ -114,13 +114,14 @@ FONT = 30  # uniform font size for the by-city variant; canvas enlarged to match
 def main_by_city() -> None:
     """Portrait variant: rows = models, cols = (year, floor count), colour = city."""
     setup_mpl()
+    ids, sfx = eval_restrict()
     plt.rcParams.update({k: FONT for k in (
         "font.size", "axes.titlesize", "axes.labelsize",
         "xtick.labelsize", "ytick.labelsize", "legend.fontsize")})
     fig, axes = plt.subplots(3, 2, figsize=(20, 29))
 
     for row, (name, path) in enumerate(MODELS.items()):
-        df = pd.read_parquet(REPO / path)
+        df = apply_restrict(pd.read_parquet(REPO / path), ids)
         short = name.split(" (")[0]  # drop the parenthetical suffix
 
         year = df[["pred_year", "true_bouwjaar", "city"]].dropna()
@@ -154,7 +155,7 @@ def main_by_city() -> None:
     fig.tight_layout(rect=(0.04, 0.03, 1, 1))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for ext in ("png", "pdf"):
-        out = OUT_DIR / f"F4_4_pred_vs_true_r2_by_city.{ext}"
+        out = OUT_DIR / f"F4_4_pred_vs_true_r2_by_city{sfx}.{ext}"
         fig.savefig(out)
         print(f"[fig] {out.relative_to(REPO)}")
 
