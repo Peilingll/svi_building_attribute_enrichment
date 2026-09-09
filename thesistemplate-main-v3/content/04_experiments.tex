@@ -132,7 +132,7 @@ A positive value means that cells assigned from image predictions produce a larg
 \subsection{Experiment III: Energy Class Prediction}
 \label{sec:information_source_conditions}
 
-Experiment III compares prediction performance for the registered energy class across three input conditions: reference building attributes, predicted building attributes, and and direct prediction from street view images.
+Experiment III compares prediction performance for the registered energy class across three input conditions: reference building attributes, predicted building attributes, and direct prediction from street view images.
  Table~\ref{tab:evaluation_conditions} defines the three energy class prediction conditions and the analytic baseline. The reference and predicted attribute conditions use the same fitted \acs{LightGBM} classifier. Their difference therefore isolates the change from reference to predicted building type, construction year, floor count, and the U-values selected by type and year. The direct image condition uses a separate image classifier and represents an alternative prediction procedure rather than an isolated input substitution.
 
 \begin{table}[htbp]
@@ -221,11 +221,11 @@ Figure~\ref{fig:distributions} shows the corresponding distributions of building
 	\label{fig:distributions}
 \end{figure}
 
-Of the 10,086 buildings in the experimental dataset, 10,075 were linked back to at least one residential certificate in the raw register. Among these buildings, 5,883 had at least two certificates, and 77.0\% of this group had more than one registered energy class. Table~\ref{tab:class_consistency} reports the remaining checks. Across the 10,075 linked buildings, the modal class had a mean share of 0.792, and the latest class agreed with the modal class for 88.0\% of buildings. Among buildings with multiple certificates, the median within-building standard deviation of the continuous energy indicator was 35.9\,kWh/(m$^2\cdot$year).
+Certificate records were linked to all 10,086 buildings in the experimental dataset. Among these buildings, 58.4\% had multiple certificates, and 77.1\% of this group had more than one registered energy class. For 88.0\% of buildings, the class from the most recent certificate matched the modal class across all linked certificates. Table~\ref{tab:class_consistency} summarises these checks.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Consistency of energy classes across certificate records for buildings in the experimental dataset.}
+	\caption{Consistency of energy classes across certificate records in the experimental dataset ($n=10{,}086$ buildings).}
 	\label{tab:class_consistency}
 	\small
 	\begin{tblr}{
@@ -238,12 +238,9 @@ Of the 10,086 buildings in the experimental dataset, 10,075 were linked back to 
 		\toprule
 		Measure & Value \\
 		\midrule
-		Experimental buildings linked to at least one raw certificate & 10,075 of 10,086 \\
-		Buildings linked to multiple certificates & 5,883 (58.4\%) \\
-		Multiple certificate buildings with inconsistent energy classes & 4,532 (77.0\%) \\
-		Mean modal class share across buildings & 0.792 \\
-		Latest class equal to modal class & 88.0\% \\
-		Median energy indicator standard deviation within multiple certificate buildings & 35.9\,kWh/(m$^2\cdot$year) \\
+		Buildings linked to multiple certificates & 58.4\% \\
+		Multiple-certificate buildings with inconsistent energy classes & 77.1\% \\
+		Buildings whose selected latest class matched the modal class & 88.0\% \\
 		\bottomrule
 	\end{tblr}
 \end{table}
@@ -280,7 +277,7 @@ Experiment I compares the three vision configurations for all three attributes. 
 \end{table}
 
 \paragraph{E1a: Building type.}
-ResNet-50 and DINOv2 differed by 0.014 in accuracy but their ordering reversed for macro F1. Figure~\ref{fig:type_confusion} shows that both configurations recalled more than 0.92 of the AB buildings and none of the 12 MFH buildings. DINOv2 recalled 0.774 of TH and 0.560 of SFH, while ResNet-50 recalled 0.711 and 0.320. The gap between accuracy and macro F1 therefore coincided with uneven recall across the four classes.
+ResNet-50 and DINOv2 differed by 0.014 in accuracy but their ordering reversed for macro F1. Figure~\ref{fig:type_confusion} shows that both configurations recalled more than 0.92 of the AB buildings and none of the 12 MFH buildings. DINOv2 recalled 0.774 of TH and 0.560 of SFH, while ResNet-50 recalled 0.711 and 0.320. Because AB accounted for approximately 88\% of the evaluation set, the high accuracy primarily reflected correct AB predictions, whereas macro F1 captured the lower performance for the less frequent classes.
 
 \begin{figure}[htbp]
 	\centering
