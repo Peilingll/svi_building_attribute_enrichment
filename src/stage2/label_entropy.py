@@ -70,15 +70,19 @@ def load_certificates(pand_ids: set) -> pd.DataFrame:
             label = _norm_label(row[iEK])
             if label is None:
                 continue
-            pid = str(row[iP]).split(",")[0].zfill(16)
-            if pid not in pand_ids:
+            # Explode all comma-separated BAGPandIDs (same convention as
+            # data_loader.py), not just the first entry.
+            pids = [p.strip().zfill(16) for p in str(row[iP]).split(",") if p.strip()]
+            pids = [p for p in pids if p in pand_ids]
+            if not pids:
                 continue
             reg = row[iReg].strip()
             try:
                 reg_year = int(reg[:4])
             except ValueError:
                 continue
-            rows.append((pid, label, reg, reg_year, _num(row[iPF])))
+            for pid in pids:
+                rows.append((pid, label, reg, reg_year, _num(row[iPF])))
     df = pd.DataFrame(rows, columns=["pand_id", "label", "reg", "reg_year", "pf"])
     logger.info("certificates for experimental dataset: %d rows / %d pands",
                 len(df), df["pand_id"].nunique())
