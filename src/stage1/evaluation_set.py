@@ -1,4 +1,4 @@
-"""Define the common evaluation set used by every experiment and configuration.
+"""Define the evaluation set used for holdout performance comparisons.
 
 The fixed holdout set (data/processed/holdout_test_pand_ids.parquet, n = 2,018)
 is the predefined partition. Four holdout buildings cannot be evaluated under
@@ -10,8 +10,9 @@ every condition:
     h_tr calculation (src/stage3/htr_instrument.load_geometry).
 
 The evaluation set is the holdout set minus the union of these two groups.
-Every table and figure in the thesis reports metrics on this set so that all
-configurations are compared on identical buildings.
+Every holdout performance comparison in the thesis reports metrics on this set
+so that all configurations are compared on identical buildings. Dataset checks
+and development-set analyses retain their own stated denominators.
 
 Outputs
   data/processed/evaluation_pand_ids.parquet        one row per evaluated building

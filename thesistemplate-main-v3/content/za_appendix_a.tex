@@ -1,8 +1,9 @@
 \chapter{Data Definitions and Source Provenance}
 \label{ch:appendix_a}
 
-This appendix defines the 3DBAG variables and TABULA-NL source decisions needed to reproduce the dataset construction and archetype lookup.
+This appendix defines the 3DBAG variables, evaluation-set exclusions, and TABULA-NL source decisions needed to reproduce the dataset construction, evaluation, and archetype lookup.
 Section~\ref{sec:appendix_a_3dbag} distinguishes the floor count used as a reference attribute from the geometric variables derived for physical calculations and feature analysis.
+Section~\ref{sec:appendix_a_evaluation_set} documents the records excluded when the fixed holdout set is reduced to the evaluation set.
 Section~\ref{sec:appendix_a_tabula} documents how the operational TABULA-NL lookup was generated and how a difference between the source workbook and the WebTool was resolved.
 
 \section{3DBAG Variables}
@@ -42,6 +43,34 @@ This distinction is necessary because the reference floor count and the floor co
 The transmission heat transfer calculation uses reconstructed element areas directly and uses \texttt{floor\_area\_estimated} as its denominator.
 The geometry feature analysis uses volume, estimated floor area, shape factor, and shared wall ratio as additions to the structured energy class model.
 None of these variables is interpreted as a field measurement of the current building envelope.
+
+\section{Evaluation Set Eligibility}
+\label{sec:appendix_a_evaluation_set}
+
+The fixed holdout set contains 2,018 buildings, while the performance comparisons use an evaluation set of 2,014 buildings with complete outputs from all three vision configurations and reconstructed areas suitable for the thermal calculation. Reconstructed areas satisfy the validity criteria when estimated floor area is between 20 and 100,000\,m$^2$, exterior wall area is between 1 and 50,000\,m$^2$, and ground area is between 5 and 20,000\,m$^2$. Table~\ref{tab:evaluation_set_exclusions} documents the four excluded buildings. The two exclusion groups do not overlap.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Buildings excluded from the fixed holdout set when defining the evaluation set.}
+	\label{tab:evaluation_set_exclusions}
+	\small
+	\begin{tblr}{
+		width = \linewidth,
+		colspec = {Q[l,m,3.8cm] Q[l,m,2.3cm] X[l]},
+		colsep = 4pt,
+		row{1} = {font=\bfseries},
+		rowsep = 3pt,
+	}
+		\toprule
+		\texttt{pand\_id} & Study area & Exclusion reason \\
+		\midrule
+		\texttt{0599100000240334} & Rotterdam & InternVL3-2B did not return complete predictions for building type, construction year, and floor count \\
+		\texttt{0599100000647213} & Rotterdam & InternVL3-2B did not return complete predictions for building type, construction year, and floor count \\
+		\texttt{0363100012160228} & Amsterdam & Reconstructed ground and estimated floor areas were below the validity ranges \\
+		\texttt{0599100000700053} & Rotterdam & Estimated floor area exceeded the validity range \\
+		\bottomrule
+	\end{tblr}
+\end{table}
 
 \section{TABULA-NL Lookup Provenance}
 \label{sec:appendix_a_tabula}

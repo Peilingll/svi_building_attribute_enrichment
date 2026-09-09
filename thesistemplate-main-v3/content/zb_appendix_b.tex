@@ -63,7 +63,7 @@ The direct ResNet-50 classifier uses the ResNet-50 optimisation and image proces
 Its three attribute heads are replaced by one energy class classification head, and validation energy class macro F1 determines checkpoint selection.
 Class weighted cross entropy is calculated from the energy class frequencies in each training fold.
 
-The direct DINOv2 classifier uses the same frozen backbone but first caches one mean feature vector for each building.
+The direct DINOv2 classifier uses the pretrained DINOv2 ViT-B/14 backbone but first caches one mean feature vector for each building.
 A separate network with a 768 dimensional input, a 256 dimensional hidden layer, GELU activation, Dropout 0.3, and one energy class output head is trained on the cached features.
 Training uses class weighted cross entropy, AdamW, a learning rate of \(5\times10^{-4}\), weight decay of 0.01, cosine annealing, a minibatch size of 256, and early stopping with a patience of 10 epochs.
 Because the image features are computed before classifier training, image augmentation is not applied during this stage.

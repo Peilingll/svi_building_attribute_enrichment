@@ -42,8 +42,7 @@ This thesis makes three contributions to the evaluation of building attributes p
 These contributions concern the controlled assessment of attribute sources and their consequences for archetype assignment and energy class prediction rather than the development of a new predictive architecture.
 
 \textbf{The first contribution is a controlled evaluation of building attribute prediction from SVI.}
-The comparison evaluates a fully fine-tuned ResNet-50, a frozen DINOv2 backbone with supervised prediction layers, and InternVL3-2B without parameter updating using one predefined holdout set and the same attribute definitions.
-The two supervised configurations produced predictions for all 2,018 holdout buildings, while two invalid InternVL3-2B records were excluded from its metrics. This design identifies the strengths and limitations of each complete configuration without implying that every metric has the same denominator.
+The comparison evaluates a fully fine-tuned ResNet-50, a frozen DINOv2 backbone with supervised prediction layers, and InternVL3-2B without parameter updating on the same 2,014-building evaluation set and with the same attribute definitions.
 
 \textbf{The second contribution connects attribute errors to archetype assignment and thermal parameters.}
 The building-level dataset links Mapillary imagery, reference building attributes, reconstructed 3DBAG geometry, \ac{EPC} records, and TABULA-NL archetypes and identifies the data source of each field.

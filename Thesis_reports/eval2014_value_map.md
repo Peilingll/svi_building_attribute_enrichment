@@ -1,11 +1,11 @@
 # 2,014 評估集：論文數字對照表（舊值 → 新值）
 
-日期：2026-09-07。資料來源：`reports/**/*_eval2014*`（commit `bc93937`）。舊值為目前 `thesistemplate-main-v3` 稿中的數字。
-**尚未修改任何 .tex。** 請先審這份表，確認後我一次替換。
+日期：2026-09-07。資料來源：`reports/**/*_eval2014*`（commit `bc93937`）。表中的舊值是採用 2,014 棟評估集之前的稿件數字。
+數字與表格註記已在 commit `6c9a0e1` 套用；後續分母定義與相關敘述的修訂目前保留為未 commit 變更。
 
 重現檢查：用同一套程式在原本的 2,018 / 2,016 棟上重算，所有已發表數字都能完全重現，因此新舊差異只來自排除的四棟。
 
-## 0. 需要你決定的四件事（定性敘述受影響）
+## 0. 已處理的四項定性影響
 
 | # | 位置 | 現況 | 新值 | 影響 |
 |---|---|---|---|---|
@@ -94,7 +94,7 @@ Caption：`($n=2{,}016$)` → `($n=2{,}014$)`。
 
 ### tab:feature_ablation、tab:city_composition、tab:class_consistency
 
-不變（dev set 或 10,086 棟資料集層級）。tab:city_composition 的註記可加一句：`Four holdout buildings are excluded from all evaluations (Section 4.1), leaving 2,014 evaluated buildings: Amsterdam 1,594, Rotterdam 283, Utrecht 103, Delft 34.`
+不變（development set 或 10,086 棟資料集層級）。城市組成表仍描述完整的資料切分；2,014 棟評估集另在 Evaluation Setup 定義，不應把四棟寫成從所有分析中排除。
 
 ### 附錄 C tab:wwr_sensitivity（`zc_appendix_c.tex:30–32`）
 
@@ -150,11 +150,9 @@ Caption（52 行）：`2,016 buildings, with 1,415 in classes A to C and 601` �
 | `zc_appendix_c:47` | 2,016-building comparison subset … | 2,014-building evaluation set |
 | `zc_appendix_c:77–78` | 0.927 to 0.960；0.098 to 0.110；0.469 | 不變 |
 
-## 3. 新增的定義句（放在 4.1 evaluation setup 的分母段，取代原本 39 行）
+## 3. 採用的分母定義
 
-> The experimental dataset was split by building at approximately 80:20 into a development set (8,068 buildings) and a fixed holdout set (2,018 buildings). Four holdout buildings could not be evaluated under every condition: two lack a valid InternVL3-2B building-level record and two lack valid 3DBAG reconstructed areas. These four buildings are excluded from all evaluations, so every table and figure in this chapter reports results on the same evaluation set of 2,014 buildings (Appendix A lists the four identifiers).
-
-附錄 A 加一小段列出四個 pand_id 與原因（見 `data/processed/evaluation_pand_ids.checksum.txt`）。
+現行定義區分三個數量：fixed holdout set 為 2,018 棟；InternVL3-2B 對其中 2,016 棟產生完整的 building attribute predictions；Experiments I 至 III 的 holdout performance comparisons 使用 2,014 棟 evaluation set。後者排除兩個 InternVL3-2B 輸出不完整的 records，以及兩個 reconstructed areas 不符合 thermal-calculation validity criteria 的 records。四個 `pand_id`、排除原因與面積門檻列於 Appendix A。
 
 ## 4. 圖
 
@@ -162,11 +160,11 @@ Caption（52 行）：`2,016 buildings, with 1,415 in classes A to C and 601` �
 |---|---|
 | fig_4_2_type_confusion | `reports/figures/ch4/F4_2_type_confusion_eval2014.png` |
 | fig_4_3_cell_recall_heatmap | `reports/figures/ch4/F4_3_cell_recall_heatmap_eval2014.png` |
-| fig_4_4_pred_vs_true_r2 | `reports/figures/ch4/F4_3_pred_vs_true_r2_eval2014.png` |
+| fig_4_4_pred_vs_true_r2 | `reports/figures/ch4/F4_4_pred_vs_true_r2_by_city_eval2014.png` |
 | （候選）建造期 Sankey | `reports/figures/ch4/F4_3_period_sankey_eval2014.png` |
 
 ## 5. 替換時的規則
 
 - 只改上表列出的數字與分母句；其他文字不動。
-- 第 0 節四項依你的決定改寫，改寫的句子會在 commit 訊息與這份表的附錄列出。
-- 替換後重跑一次全文 grep，確認 `2,016`、`comparison subset`、`0.180`、`0.022` 等舊值不再出現。
+- 第 0 節四項已按核對後的數值改寫；圖 4.3 的 occupied-cell 變化另在 Appendix C 的敏感度說明中交代。
+- 替換後重跑全文檢查：`comparison subset` 不再作為現行術語；`0.180` 與 `0.022` 不應留在主要結果敘述；`2,016` 僅能表示 InternVL3-2B 對 2,018 棟 holdout buildings 的完整輸出數。

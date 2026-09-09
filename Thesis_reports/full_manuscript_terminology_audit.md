@@ -1,8 +1,8 @@
 # Full Manuscript Terminology Audit
 
-## Implementation status, 2026-09-06
+## Implementation status, 2026-09-07
 
-The recommendations in this audit have now been applied to the thesis source. The certificate consistency analysis was rerun after restricting the input to the 10,086-building experimental dataset. Of these buildings, 10,075 could be linked back to at least one raw residential certificate, and all thesis values now use that result. Chapter 3 defines the eligible reference set, experimental dataset, development set, fixed holdout set, comparison subset, reference building attributes, and predicted building attributes. Reader-facing terminology for vision configurations, energy class prediction conditions, and the floor-area-weighted relative difference has also been standardised across the manuscript and appendices.
+The recommendations in this audit have now been applied to the thesis source. The certificate consistency analysis was rerun after restricting the input to the 10,086-building experimental dataset. Of these buildings, 10,075 could be linked back to at least one raw residential certificate, and all thesis values now use that result. Chapter 3 defines the eligible reference set, experimental dataset, development set, fixed holdout set, reference building attributes, and predicted building attributes. Chapter 4 defines the 2,014-building evaluation set used for holdout performance comparisons. Reader-facing terminology for vision configurations, energy class prediction conditions, and the floor-area-weighted relative difference has also been standardised across the manuscript and appendices.
 
 ## 1. Audit scope and principal conclusion
 
@@ -12,11 +12,11 @@ This audit reviews the terminology used in the thesis source files from the Abst
 2. the terms used for building type, construction year, and floor count;
 3. the nouns and denominators used when reporting numbers of buildings.
 
-The revised manuscript no longer uses `common dataset` or `shared dataset` to describe the evaluation data. It distinguishes the fixed holdout set of 2,018 buildings from the analysis specific subsets of 2,016 or 2,014 buildings that require valid model outputs or geometry.
+The revised manuscript no longer uses `common dataset` or `shared dataset` to describe the evaluation data. It distinguishes the fixed holdout set of 2,018 buildings from the evaluation set of 2,014 buildings used for holdout performance comparisons. The two incomplete InternVL3-2B outputs are documented as exclusions rather than introduced as a separate denominator.
 
 The revised manuscript uses **building attributes** as the canonical umbrella term for **building type, construction year, and floor count**. Source and prediction status are expressed with the modifiers **reference** and **predicted**.
 
-The revised manuscript uses `dataset` for the complete linked data product, `set` for a partition, `subset` for an analysis specific selection, and `buildings` when reporting the denominator. Unless otherwise stated, a building count means the number of unique BAG building identifiers, `pand_id`.
+The revised manuscript uses `dataset` for the complete linked data product, `set` for a defined collection of buildings, and `buildings` when reporting the denominator. The `fixed holdout set` names the predefined partition, whereas the `evaluation set` names the 2,014 buildings selected from it by the stated output and reconstructed-area criteria. Building counts are reported as unique BAG building identifiers, `pand_id`.
 
 ## 2. Direct answers to the three questions
 
@@ -33,8 +33,8 @@ Use the terminology as follows:
 | First definition | `fixed holdout set` | The predefined partition containing 2,018 unique BAG buildings |
 | Later references | `holdout set` | Short form referring to the same predefined partition |
 | Reporting its denominator | `the 2,018 buildings in the holdout set` | Explicit count and unit |
-| Experiment III complete case comparison | `comparison subset` | The 2,016 holdout buildings with valid outputs for every evaluated energy class prediction condition |
-| Experiment II physical comparison | `thermal evaluation subset` followed by the exact denominator | The buildings with valid predicted attributes and reconstructed areas for the named configuration |
+| Holdout performance comparisons | `evaluation set` | The 2,014 holdout buildings with complete outputs from all three vision configurations and reconstructed areas that satisfy the thermal-calculation validity criteria |
+| Incomplete InternVL3-2B outputs | `two holdout buildings` | Documented as exclusions without defining another set or denominator |
 
 Do not use the following expressions as synonyms:
 
@@ -45,7 +45,7 @@ Do not use the following expressions as synonyms:
 | `common dataset` | It does not identify whether the full experimental dataset or a complete case subset is meant |
 | `shared dataset` | It suggests joint ownership or access rather than identical evaluated building identifiers |
 | `common holdout` or `shared holdout` | Neither term states the inclusion criterion or denominator |
-| `same holdout buildings` without a number | This is inaccurate when valid outputs differ by configuration |
+| `same holdout buildings` without a number | This does not distinguish the 2,018-building partition from the 2,014-building evaluation set |
 
 The following forms were recorded before implementation and guided the revision:
 
@@ -55,15 +55,15 @@ The following forms were recorded before implementation and guided the revision:
 | `fixed holdout` | 9 | Understandable but should become `fixed holdout set` or `holdout set` |
 | `holdout set` | 2 | Correct after the full term has been defined |
 | `holdout buildings` | 6 | Acceptable only when the count or inclusion rule is clear |
-| `comparison subset` | 5 | Correct for the 2,016 building complete case comparison in Experiment III |
+| `comparison subset` | 5 | Historical wording replaced by `evaluation set` after the 2,014-building denominator was adopted |
 | `same buildings` | 11 | Appropriate as a comparison statement only when the actual building identifiers are identical |
 | `common dataset` | 0 | Correctly absent |
 | `shared dataset` | 0 | Correctly absent |
 
-Two claims identified during the audit were corrected because they exceeded the actual denominator evidence:
+Two claims identified during the denominator revision were corrected because they exceeded the actual evidence:
 
-1. Chapter 3 now distinguishes the predefined holdout set from the 2,016-building comparison subset used when every energy class prediction condition must have a valid output.
-2. Chapter 5 now states that the supervised configurations use all 2,018 holdout buildings for attribute prediction, while InternVL3-2B has 2,016 valid records. Claims about Experiment III refer specifically to the 2,016-building comparison subset.
+1. Chapter 4 distinguishes the predefined 2,018-building holdout set from the 2,014-building evaluation set used for holdout performance comparisons.
+2. Chapter 4 records the two incomplete InternVL3-2B outputs, while configuration performance is compared on the same 2,014 evaluated buildings. Chapter 5 reports only the common evaluation denominator.
 
 ### 2.2 What term should describe type, year, and floor count?
 
@@ -135,15 +135,13 @@ The following hierarchy is supported by the current data artefacts, source code,
 | 3 | `experimental dataset` | 10,086 | 47,150 | Intersection of the SVI manifest and eligible reference set after the required geometry and TABULA-NL inputs are available. This is the authoritative dataset for model development and evaluation. |
 | 4a | `development set` | 8,068 | 37,822 | The part of the experimental dataset used for training, validation, prompt development, and feature analysis. |
 | 4b | `fixed holdout set` | 2,018 | 9,328 | The predefined part of the experimental dataset excluded from model fitting and hyperparameter selection. |
-| 5 | `comparison subset` | 2,016 | Do not report unless needed | The strict intersection of holdout buildings with valid outputs for all Experiment III prediction conditions. |
-| 6a | `thermal evaluation subset for ResNet-50 and DINOv2` | 2,016 | Not applicable | Holdout buildings with valid predicted attributes and reconstructed areas for these configurations. |
-| 6b | `thermal evaluation subset for InternVL3-2B` | 2,014 | Not applicable | Holdout buildings with a valid InternVL3 attribute record and reconstructed areas. |
+| 5 | `evaluation set` | 2,014 | Not applicable | Holdout buildings with complete outputs from all three vision configurations and reconstructed areas that satisfy the thermal-calculation validity criteria. This set is used for holdout performance comparisons in Experiments I to III. |
 
 The count hierarchy should be presented as:
 
-`eligible reference set` and `SVI manifest` → `experimental dataset` → `development set` plus `fixed holdout set` → analysis specific subsets.
+`eligible reference set` and `SVI manifest` → `experimental dataset` → `development set` plus `fixed holdout set` → `evaluation set`.
 
-This hierarchy resolves the apparent inconsistency among 124,784, 10,104, 10,086, 8,068, 2,018, 2,016, and 2,014. These values do not describe competing versions of one dataset. They describe different stages or subsets and must always be paired with the canonical name and unit.
+This hierarchy resolves the apparent inconsistency among 124,784, 10,104, 10,086, 8,068, 2,018, and 2,014. The two incomplete InternVL3-2B outputs explain part of the reduction from the fixed holdout set to the evaluation set and do not define another dataset. These values must always be paired with the canonical name and unit.
 
 ### 3.1 Certificate consistency analysis after denominator reconciliation
 
@@ -242,21 +240,21 @@ The following table records the issues identified before implementation. All act
 | `03_method.tex:7` | `building information obtained from street view imagery` | Use `building attributes predicted from SVI` because the evaluated outputs are explicit | Major | Adopt |
 | `03_method.tex:40,150,151,181` | Several forms of `linked dataset` | Define the final output once as the `experimental dataset` | Major | Adopt |
 | `03_method.tex:193` | `fixed holdout set` | Retain as the authoritative first definition | None | Retain |
-| `03_method.tex:201` | `different building samples` | Use `different building partitions`; later report analysis specific subsets separately | Major | Adopt |
+| `03_method.tex:201` | `different building samples` | Use `different building partitions`; define the evaluation set separately in Chapter 4 | Major | Adopted |
 | `03_method.tex:207` | Building type equated with TABULA-NL size classes | Define the four class building type target and its use as the lookup size class separately | Major | Adopt |
 | `03_method.tex:278` | `Vision Language Model Attribute Inference` | Consider `Building Attribute Prediction with InternVL3-2B` and explain `without parameter updating` in the paragraph | Minor | Discuss |
 | `03_method.tex:410` | `structured inputs` | Retain and define the complete eight input vector | None | Retain |
-| `03_method.tex:412` | Same partitions imply unchanged evaluation sample | State the predefined partitions first, then define complete case comparison subsets | Critical | Adopt |
+| `03_method.tex:412` | Same partitions imply an unchanged evaluation set | State that energy class conditions use the evaluation set defined in Chapter 4 | Critical | Adopted |
 | `04_experiments.tex:4,9,26` | `building sample`, `sample and target conditions` | Use `experimental dataset`, `building partitions`, or `evaluated buildings`, depending on referent | Major | Adopt |
 | `04_experiments.tex:37` | `curated SVI delivery` | Use `SVI manifest` to match the actual data artefact | Major | Adopt |
 | `04_experiments.tex:37` | `fixed holdout` | Use `fixed holdout set` at first mention in the chapter, then `holdout set` | Minor | Adopt |
-| `04_experiments.tex:39` | Denominator paragraph | Retain the content but name the 2,016 Experiment III set `comparison subset` at its first occurrence | Major | Adopt |
+| `04_experiments.tex:39` | Denominator paragraph | Distinguish the 2,018-building fixed holdout set from the 2,014-building evaluation set and state the two categories of exclusion | Critical | Adopted |
 | `04_experiments.tex:46` | `explicit attributes` and `same building record` | Use `building attributes`; state that outputs are indexed by `pand_id` and report valid denominators | Major | Adopt |
 | `04_experiments.tex:184,221,226` | `final evaluation sample`, `complete evaluation sample`, `experimental sample`, `SVI covered sample` | Use `experimental dataset` for 10,086 and `evaluated buildings` when referring to its members | Critical | Adopt |
 | `04_experiments.tex:221` | `eligible reference dataset` | Use `eligible reference set` or `124,784 eligible reference buildings` | Major | Adopt |
 | `04_experiments.tex:230` | 10,093 building certificate analysis | Recompute using the 10,086-building experimental dataset | Critical | Completed; 10,075 buildings linked to raw records |
-| `04_experiments.tex:265,285,331,351,389` | Repeated `fixed holdout` | Use `holdout set` after the definition and include configuration specific denominators in notes | Minor | Adopt |
-| `04_experiments.tex:400` | `comparison subset of 2,016 holdout buildings` | Retain; add the complete case inclusion rule at first definition | None | Retain |
+| `04_experiments.tex:265,285,331,351,389` | Repeated `fixed holdout` | Use `evaluation set` for performance results and state the common denominator in table notes | Major | Adopted |
+| `04_experiments.tex:400` | Former configuration-specific comparison subset | Replace with `2,014-building evaluation set` | Critical | Adopted |
 | `04_experiments.tex:500,525` | `structured inputs` | Retain only for the eight LightGBM inputs | None | Retain |
 | `04_experiments.tex:525` | `visual attribute extraction` | Use `building attribute prediction from SVI` | Major | Adopt |
 | `04_experiments.tex:532` | Repeated forms of `evaluation sample`, `sample`, and `target sample` | Use `experimental dataset`, `evaluated buildings`, and `evaluation set` | Major | Adopt |
@@ -265,10 +263,10 @@ The following table records the issues identified before implementation. All act
 | `05_conclusions.tex:33` | `visible or semantic attributes` | Name `building type, construction year, and floor count`, or use `building attributes` | Major | Adopt |
 | `05_conclusions.tex:34` | `structured attributes` | Use `structured inputs` or `building attributes and assigned U-values`, according to the intended referent | Major | Adopt |
 | `05_conclusions.tex:36` | `explicit building attributes` | Use `building attributes` | Minor | Adopt |
-| `05_conclusions.tex:45,46` | `same holdout buildings` | Distinguish the 2,018 holdout set from the 2,016 valid InternVL3 predictions | Critical | Adopt |
-| `05_conclusions.tex:54` | `same buildings and data partitions` | Name the comparison subset if the claim concerns Experiment III | Major | Adopt |
+| `05_conclusions.tex:45,46` | `same holdout buildings` | State that performance is compared on the same 2,014 evaluated buildings and report InternVL3-2B output completeness separately | Critical | Adopted |
+| `05_conclusions.tex:54` | `same buildings and data partitions` | Name the 2,014-building evaluation set if the claim concerns Experiment III | Major | Adopted |
 | `zb_appendix_b.tex:78` | `structured building attributes` | Use `structured inputs` because city and U-values are also included | Major | Adopt |
-| `zc_appendix_c.tex:47` | `2,016 holdout buildings` | Use `2,016 buildings in the comparison subset` | Minor | Adopt |
+| `zc_appendix_c.tex:47` | Former configuration-specific denominator | Replace with the 2,014-building evaluation set and its eligibility rule | Critical | Adopted |
 
 ## 9. Style and compound term consistency
 
@@ -296,7 +294,7 @@ The following terms should be defined at their first authoritative use and then 
 | `predicted building attributes` | Chapter 3 Stage 2 |
 | `experimental dataset` | Chapter 3 Final Dataset Integration and Eligibility |
 | `development set` and `fixed holdout set` | Chapter 3 Data Partitioning and Cross Validation |
-| `comparison subset` | Chapter 4 Evaluation Setup, before Experiment I metrics |
+| `evaluation set` | Chapter 4 Evaluation Setup, before Experiment I metrics; exact exclusions and validity criteria are documented in Appendix A |
 | `building type` and `TABULA-NL size class` | Chapter 3 Stage 2 and Stage 3 mapping paragraphs |
 | `registered energy class` | Chapter 3 Data Sources and Stage 4 target definition |
 | `vision configuration` | Chapter 3 Vision Configurations |
@@ -324,7 +322,7 @@ The revised information chain is clear: SVI predicts building attributes; buildi
 
 ### 12.2 Cross-section contradiction
 
-The denominator contradiction has been resolved by stating the fixed partition separately from each valid analysis subset. The revised text reports 2,018, 2,016, or 2,014 buildings according to model output and geometry availability.
+The denominator contradiction has been resolved by separating the predefined partition from the set used for performance comparison. The fixed holdout set contains 2,018 buildings, and all holdout performance comparisons use the same 2,014-building evaluation set. The two incomplete InternVL3-2B outputs are reported as exclusions, not as another denominator.
 
 The provenance contradiction has been resolved by using `reference building attributes` for the combined EP-Online, BAG, and reconstructed 3DBAG values and naming the individual sources where relevant.
 
@@ -336,7 +334,7 @@ The canonical terms should be:
 
 For data:
 
-`SVI manifest` and `eligible reference set` → `experimental dataset` → `development set` plus `fixed holdout set` → `comparison subset` or a named analysis subset.
+`SVI manifest` and `eligible reference set` → `experimental dataset` → `development set` plus `fixed holdout set` → `evaluation set`.
 
 ### 12.4 New-term necessity
 
@@ -348,14 +346,14 @@ The definitions of the dataset hierarchy, building attributes, record units, and
 
 ### 12.6 Citation function
 
-This terminology revision does not require new citations for study specific names such as `experimental dataset`, `fixed holdout set`, or `comparison subset`. Existing citations should remain attached to source definitions and inherited methods, including BAG, EP-Online, 3DBAG, TABULA-NL, model architectures, and metrics derived from external calculation methods. Terminology used to describe the present study should not be supported by unrelated literature merely to make it sound established.
+This terminology revision does not require new citations for study specific names such as `experimental dataset`, `fixed holdout set`, or `evaluation set`. Existing citations should remain attached to source definitions and inherited methods, including BAG, EP-Online, 3DBAG, TABULA-NL, model architectures, and metrics derived from external calculation methods. Terminology used to describe the present study should not be supported by unrelated literature merely to make it sound established.
 
 ## 13. Completed implementation
 
-The certificate analysis was recomputed, the canonical definitions were inserted in Chapter 3, and the data hierarchy and analysis denominators were standardised. The revision also separates building type from TABULA-NL size class, separates construction year from construction period, corrects the terminology for $h_{tr}$ and the floor-area-weighted relative difference, and assigns distinct meanings to `vision configuration`, `prediction procedure`, and `energy class prediction condition`. A final acronym, compound modifier, and denominator check was completed after compilation.
+The certificate analysis was recomputed, the canonical definitions were inserted in Chapter 3, and the data hierarchy and evaluation denominator were standardised. The revision also separates building type from TABULA-NL size class, separates construction year from construction period, corrects the terminology for $h_{tr}$ and the floor-area-weighted relative difference, and assigns distinct meanings to `vision configuration`, `prediction procedure`, and `energy class prediction condition`. A final acronym, compound modifier, and denominator check was completed, and the revised manuscript compiled with MiKTeX without undefined references or LaTeX errors. The three Chapter 4 result figures are byte-identical to their `eval2014` source artefacts.
 
 ## 14. Final recommendation
 
-The thesis should not claim that every evaluation uses one identical set of 2,018 buildings. It should claim that all models use the same **predefined building partition**, while each result reports the **actual number of buildings with valid inputs and outputs**. Experiment III can make the strongest same building comparison because it explicitly uses the 2,016 building comparison subset.
+The thesis should not equate the 2,018-building fixed holdout set with the buildings used to calculate performance metrics. It should state that the holdout partition was predefined and that all performance comparisons in Experiments I to III use the same **2,014-building evaluation set**. The two incomplete InternVL3-2B outputs should remain visible as exclusion records without introducing another denominator.
 
 The thesis should use **building attributes** as the sole umbrella term for building type, construction year, and floor count. Their status should be expressed as **reference** or **predicted**, and their sources should be stated separately. Numbers should be reported as counts of **unique BAG buildings**, with `dataset` reserved for the linked data product and `set` or `subset` reserved for partitions and complete case analyses.
