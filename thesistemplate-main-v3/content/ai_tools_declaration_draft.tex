@@ -1,0 +1,43 @@
+% Draft: "Use of AI Tools" page, following the four-column overview recommended in
+% the TUM Citation Guide (2026 edition, section "Can I cite an AI like ChatGPT?",
+% pp. 66-68 English / 4.9 pp. 68-71 German): Program (incl. version), Use case,
+% Scope, Comment.
+%
+% Suggested placement in thesis.tex, directly after the affidavit:
+%   \Declaration
+%   \cleardoublepage
+%   \input{content/ze_ai_tools}
+%   \cleardoublepage
+%
+% Rows marked [FILL] must be completed or deleted by the author. Do not list a
+% tool that was not used; do not omit one that was.
+
+\chapter*{Use of AI Tools}
+\addcontentsline{toc}{chapter}{Use of AI Tools}
+
+In accordance with the TUM Citation Guide and the declaration above, the following AI-based tools were used as aids in the preparation of this thesis.
+None of these tools served as a source of information, and none is cited in the reference list.
+All text, figures, analyses, and conclusions were written, checked, and are the responsibility of the author.
+Where a tool is itself an object of investigation, its use is described in the Method chapter and only summarised here.
+
+\begin{table}[htbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		width = \linewidth,
+		colspec = {Q[l,m,3.2cm] X[l] X[l] Q[l,m,3.4cm]},
+		colsep = 4pt,
+		rowsep = 3pt,
+		row{1} = {font=\bfseries},
+		hlines = {0.4pt},
+		vlines = {0.4pt},
+	}
+		Program (version) & Use case & Scope & Comment \\
+		InternVL3-2B (OpenGVLab, 2025) & Object of investigation: building attribute prediction and direct energy class prediction from street view imagery without parameter updating & Sections~3.3 and~4.2; Appendix~D reproduces the prompts verbatim & Not used as a writing aid; outputs are experimental data reported in Chapter~4 \\
+		Claude Code, Claude Fable~5.1 (Anthropic, 2026) & Assistance with literature search and cross-checking of references; drafting and revising figure and table generation scripts; recomputation and consistency checks of reported numbers; suggestions for English wording & Chapters~1--5 (wording suggestions); scripts in \texttt{scripts/} and \texttt{src/} for figures and tables in Chapter~4 and Appendices~B--C & All suggestions were reviewed and edited by the author; no passage was adopted verbatim without revision \\
+		[FILL] e.g.\ ChatGPT (OpenAI, GPT-4o, 2025) & [FILL] e.g.\ improving the linguistic quality of the author's own text & [FILL] e.g.\ Abstract, Chapters~1 and~2 & [FILL] \\
+	\end{tblr}
+\end{table}
+
+% Optional closing sentence if any tool was used for literature search:
+% AI-based literature research tools were not used; literature was retrieved through Scopus, Web of Science, and Google Scholar.

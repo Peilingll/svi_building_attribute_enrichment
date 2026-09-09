@@ -78,11 +78,7 @@ The fixed holdout set contains 2,018 buildings, while the performance comparison
 The operational TABULA-NL lookup was generated from the \texttt{Tab.Building.Constr} sheet of the TABULA values workbook and checked against the Dutch exemplary building records in the TABULA WebTool \parencite{loga2016,tabulawebtool}.
 The generator selects existing state construction assemblies for each residential size class and construction period.
 Terraced houses use the solid wall variants, while single family houses, multifamily houses, and apartment blocks use the cavity wall variants represented by the corresponding exemplary buildings.
-When the workbook contains several subperiod assemblies within one TABULA-NL period, the implementation selects the assembly with the highest U-value.
-Window U-values are assigned directly by construction period.
+When the workbook contains several subperiod assemblies within one TABULA-NL period, the implementation selects the assembly with the highest U-value. Window U-values are assigned directly by construction period.
 
-The generated values matched the WebTool values for the wall, roof, and floor of the NL.01 terraced house and for the wall and roof of the NL.01 apartment block.
-For the NL.01 apartment block floor, the WebTool reports 1.14\,$\mathrm{W/(m^2\,K)}$, but this value is not present in the existing state construction library used by the generator.
-The implementation therefore uses 1.7241\,$\mathrm{W/(m^2\,K)}$ from construction \texttt{NL.Floor.ReEx.01.02}, which provides a traceable workbook value for the selected cavity wall variant.
 This value is used consistently in Table~\ref{tab:tabula_uvalues} and in all archetype and transmission heat transfer calculations.
 The generated lookup and its element source mapping are stored in \texttt{data/processed/tabula\_nl.csv} and \texttt{data/processed/tabula\_nl\_provenance.csv}.

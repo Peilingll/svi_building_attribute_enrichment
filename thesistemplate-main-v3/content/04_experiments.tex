@@ -120,9 +120,9 @@ A positive value means that cells assigned from image predictions produce a larg
 		Symbol & Quantity & Source & Role in the comparison \\
 		\midrule
 		$U_{wall}$, $U_{roof}$, $U_{floor}$, $U_{window}$ & Envelope U-values & TABULA-NL cell lookup & Vary between the reference and predicted cells \\
-		$A_{wall}$ & External facade area excluding shared walls & Reconstructed 3DBAG \acs{LoD}2.2 geometry & Fixed for both calculations \\
-		$A_{roof}$ & Roof area & Reconstructed 3DBAG \acs{LoD}2.2 geometry & Fixed for both calculations \\
-		$A_{ground}$ & Area in contact with the ground & Reconstructed 3DBAG \acs{LoD}2.2 geometry & Fixed for both calculations \\
+		$A_{wall}$ & External facade area excluding shared walls & Reconstructed 3DBAG \acs{LoD} 2.2 geometry & Fixed for both calculations \\
+		$A_{roof}$ & Roof area & Reconstructed 3DBAG \acs{LoD} 2.2 geometry & Fixed for both calculations \\
+		$A_{ground}$ & Area in contact with the ground & Reconstructed 3DBAG \acs{LoD} 2.2 geometry & Fixed for both calculations \\
 		$A_{floor}$ & Estimated floor area & Reconstructed 3DBAG geometry & Denominator and aggregation weight \\
 		WWR & Fraction of facade area assigned to windows & Assumed value & Fixed for both calculations at each tested value \\
 		\bottomrule
@@ -418,7 +418,7 @@ Table~\ref{tab:binary_conditions} reports the default threshold results. Direct 
 	\end{tblr}
 \end{table}
 
-The reference attribute condition recalled 96.0\% of classes A to C but 9.8\% of classes D to G. Predicted attributes from DINOv2 and ResNet-50 produced similar recalls of 10.8\% and 11.0\% for classes D to G. Direct DINOv2 increased recall for this group to 46.9\%. Direct InternVL3-2B assigned every building to classes D to G, so its macro F1 of 0.230 reflected a constant prediction rather than discrimination among buildings. Table~\ref{tab:binary_perclass} reports precision, recall, and F1 for both class groups.
+The reference attribute condition recalled 96.0\% of classes A to C but 9.8\% of classes D to G. Predicted attributes from DINOv2 and ResNet-50 produced similar recalls of 10.8\% and 11.0\% for classes D to G. Direct DINOv2 increased recall for this group to 46.9\%. Direct InternVL3-2B assigned every building to classes D to G, so its macro F1 of 0.230 reflected a constant prediction rather than discrimination among buildings.
 
 \paragraph{E3b: Seven-class energy prediction.}
 Table~\ref{tab:sevenclass_conditions} reports results for classes A to G. Direct DINOv2 attained the highest macro F1 at 0.213, followed by direct ResNet-50 at 0.201. The reference attribute condition reached 0.171 and the three predicted attribute conditions ranged from 0.131 to 0.151. The metric ranking differed for exact and $\pm1$ accuracy, for which the reference attribute condition attained the highest values of 0.358 and 0.660.
