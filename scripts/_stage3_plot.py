@@ -1,4 +1,4 @@
-"""Shared plotting / IO helpers for the Stage 3 result notebook (09)."""
+"""Shared plotting / IO helpers for the Stage 3 figure scripts (scripts/fig_ch4_*.py)."""
 
 from __future__ import annotations
 
