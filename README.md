@@ -83,6 +83,7 @@ Each module carries its own usage notes in the docstring.
 │   └── stage3/                 # end-to-end route comparison, regression, ordinal metrics
 ├── scripts/
 │   ├── fig_ch4_*.py            # thesis figures rendered from reports/ data
+│   ├── figs_stage1_*.py, figs_stage3_routes.py   # per-stage result tables and figures
 │   ├── _stage1_plot.py, _stage3_plot.py   # shared plotting helpers
 │   ├── compute_*.py            # one-off numbers (oracle, random baseline, R2)
 │   ├── recompute_eval2014.py   # re-run every result on the evaluation set

@@ -14,17 +14,17 @@ Environment: `uv run python -m <module>` for ETL / CPU work; conda
 
 | table | what it shows | script |
 |---|---|---|
-| `stage1/T1_per_city_train_holdout` | buildings and images per city, dev vs hold-out | archived: `archive/notebooks/figs_stage1_dataset.py` |
-| `stage1/T1_dinov2_cv_per_fold`, `T1_resnet50_cv_per_fold` | 5-fold CV metrics per backbone | archived: `archive/notebooks/figs_stage1_dinov2.py`, `figs_stage1_resnet.py` |
-| `stage1/T1_vlm_inference_health` | InternVL3 parse and coverage rates | archived: `archive/notebooks/figs_stage1_vlm.py` |
+| `stage1/T1_per_city_train_holdout` | buildings and images per city, dev vs hold-out | `scripts/figs_stage1_dataset.py` |
+| `stage1/T1_dinov2_cv_per_fold`, `T1_resnet50_cv_per_fold` | 5-fold CV metrics per backbone | `scripts/figs_stage1_dinov2.py`, `scripts/figs_stage1_resnet.py` |
+| `stage1/T1_vlm_inference_health` | InternVL3 parse and coverage rates | `scripts/figs_stage1_vlm.py` |
 | `stage1/T1_evaluation_set_by_city_eval2014` | evaluation-set composition by study area | `scripts/recompute_eval2014.py --steps bycity` |
-| `stage1/T2_*_holdout_headline` | hold-out headline metrics per backbone | `src/stage1/eval_holdout.py` (numbers), table layout archived as above |
-| `stage1/T3_model_comparison` (+`_eval2014`) | DINOv2 vs ResNet-50 vs InternVL3 side by side | `scripts/recompute_eval2014.py --steps stage1`; pooled version archived: `figs_stage1_comparison.py` |
+| `stage1/T2_*_holdout_headline` | hold-out headline metrics per backbone | `src/stage1/eval_holdout.py` (numbers); tables by `scripts/figs_stage1_{dinov2,resnet,vlm}.py` |
+| `stage1/T3_model_comparison` (+`_eval2014`) | DINOv2 vs ResNet-50 vs InternVL3 side by side | `scripts/figs_stage1_comparison.py`; eval2014 via `scripts/recompute_eval2014.py --steps stage1` |
 | `stage1/T4_joint_cell` (+`_eval2014`) | joint TABULA-cell assignment accuracy | `src/stage1/joint_cell_eval.py` |
 
-The archived generators live under `archive/notebooks/` (local only, not
-tracked). The tables they produced are kept because the numbers still hold;
-regenerating them needs those scripts restored to `scripts/`.
+The `scripts/figs_*.py` scripts are plain-Python versions of the former
+result notebooks: they read finished artifacts under `reports/` and
+`data/processed/` and write tables and figures; nothing in them trains a model.
 
 ## Stage 2 — are those attributes worth anything? (ground-truth inputs, no images)
 
@@ -46,7 +46,7 @@ Metrics JSON and out-of-fold predictions for every run are in `reports/stage2/`.
 | `stage3/T3_error_propagation` (+variants) | where M3 loses relative to M1 | `src/stage3/run_stage3.py` |
 | `stage3/T3_ordinal_collapse` | ordinal metrics and literature-aligned label collapses | `src/stage3/ordinal_collapse.py` |
 | `stage3/T3reg_regression_vs_classification` (+`_binary`) | kWh regression vs direct classification | `src/stage3/regression_kwh.py` |
-| `stage3/T3_full_comparison` | every route in one table | archived: `archive/notebooks/figs_stage3_routes.py` |
+| `stage3/T3_full_comparison` | every route in one table | `scripts/figs_stage3_routes.py` |
 | `stage3/T7_htr_instrument` (+`_eval2014`) | transmission heat-loss readout that resolves Stage 1 quality | `src/stage3/htr_instrument.py`; eval2014 via `recompute_eval2014.py --steps htr` |
 | `stage3/T8_binary_operating_point` | binary predictions read at two thresholds | `src/stage3/binary_operating_point.py` |
 
@@ -63,11 +63,10 @@ See `audit/README.md`. Scripts: `src/audit/a0*.py`.
 |---|---|
 | `ch4/F4_1_*`, `F4_2_*`, `F4_3_*`, `F4_4_*` | `scripts/fig_ch4_*.py`; eval2014 variants via `scripts/recompute_eval2014.py --steps figures` |
 | `audit/A02_*`, `A03_*` | `src/audit/a02_ep1_ep2.py`, `src/audit/a03_within_cell_labels.py` |
-| `stage1/**`, `stage3/**` | archived notebook generators (see Stage 1 note above) |
+| `stage1/**` | `scripts/figs_stage1_{dataset,dinov2,resnet,vlm,comparison}.py` |
+| `stage3/**` | `scripts/figs_stage3_routes.py` |
 
 ## Known gaps
 
-- Stage 1 descriptive tables and the `figures/stage1`, `figures/stage3`
-  folders have their generators in `archive/notebooks/` only.
 - The 2026-06-26 geometry ablation was computed interactively; it is
   superseded by `src/audit/a01_compactheid_source.py`, which uses clean features.
