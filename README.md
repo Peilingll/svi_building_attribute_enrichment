@@ -1,16 +1,15 @@
 # SVI Building Attribute Enrichment
 
-Code and results for a master's thesis that asks how much information street-view
-imagery (SVI) adds when predicting Dutch residential energy-performance labels.
-Public registers (BAG, 3D BAG, EP-Online) and TABULA-NL archetypes form the
-"semi-synthetic" backbone; vision models read building attributes from street
-view; three experiments measure what each source contributes.
+Code and results for a master's thesis investigating the added value of
+street-view imagery (SVI) for predicting Dutch residential energy-performance
+labels. The semi-synthetic framework combines public registers (BAG, 3D BAG,
+and EP-Online), TABULA-NL archetypes, and vision-derived building attributes.
+Three experiments assess the contribution of each data source across
+residential buildings in Amsterdam, Rotterdam, Utrecht, and Delft.
 
-Study area: residential buildings in Amsterdam, Rotterdam, Utrecht and Delft.
+## Thesis Chapter Guide
 
-## Where the code is
-
-Folder names predate the thesis numbering.
+The table below maps the repository's original folder names to the corresponding thesis chapters.
 
 | Thesis | Code |
 |---|---|
@@ -67,7 +66,7 @@ uv run python scripts/fig_ch4_1_label_distributions.py
 
 Each module carries its own usage notes in the docstring.
 
-## Inputs not in the repository
+## Data Not Included
 
 | input | source | path | needed for |
 |---|---|---|---|
