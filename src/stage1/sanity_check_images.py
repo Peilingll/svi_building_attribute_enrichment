@@ -13,6 +13,8 @@ from pathlib import Path
 import pandas as pd
 from PIL import Image, UnidentifiedImageError
 
+from src.config import resolve_path
+
 logger = logging.getLogger(__name__)
 
 MIN_DIM = 128  # PIL RandomResizedCrop(224) can up-sample smaller images;
@@ -31,9 +33,9 @@ def sanity_check(manifest_path: Path, n: int = 200, seed: int = 42) -> dict:
     sizes = []
     for p in sample:
         try:
-            with Image.open(p) as img:
+            with Image.open(resolve_path(p)) as img:
                 img.verify()
-            with Image.open(p) as img:
+            with Image.open(resolve_path(p)) as img:
                 w, h = img.size
                 _ = img.convert("RGB")
         except (UnidentifiedImageError, OSError, ValueError) as e:

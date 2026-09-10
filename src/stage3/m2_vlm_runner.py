@@ -21,6 +21,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.config import resolve_path
+from src.svi_manifest import crop_key
 from src.stage1.vlm.internvl3_runner import (
     DEFAULT_MODEL,
     CHECKPOINT_EVERY,
@@ -140,8 +142,8 @@ def run(args: argparse.Namespace) -> None:
     existing_df = pd.DataFrame()
     if args.resume and partial_path.exists():
         existing_df = pd.read_parquet(partial_path)
-        done = set(existing_df["file_path"].astype(str))
-        todo = todo[~todo["file_path"].astype(str).isin(done)].reset_index(drop=True)
+        done = {crop_key(p) for p in existing_df["file_path"].astype(str)}  # path layout changed once; key is stable
+        todo = todo[~todo["file_path"].astype(str).map(crop_key).isin(done)].reset_index(drop=True)
         logger.info("resume: %d done, %d to run", len(done), len(todo))
 
     if len(todo) == 0:
@@ -160,7 +162,7 @@ def run(args: argparse.Namespace) -> None:
         fp = str(row["file_path"])
         t1 = time.time()
         try:
-            raw = proc.process_image(fp, PROMPTS[args.task])
+            raw = proc.process_image(str(resolve_path(fp)), PROMPTS[args.task])
             err = None
         except Exception as exc:  # noqa: BLE001
             raw, err = None, f"inference:{type(exc).__name__}:{exc}"

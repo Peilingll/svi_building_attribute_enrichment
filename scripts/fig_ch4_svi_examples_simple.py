@@ -23,12 +23,15 @@ import base64
 import io
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 import pandas as pd
 from PIL import Image, ImageChops
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from src.config import resolve_path  # noqa: E402
 OUT = REPO / "reports" / "figures" / "ch4"
 CAND = OUT / "F4_5_attribute_examples_candidates.csv"
 MANIFEST = REPO / "data/processed/svi_manifest.parquet"
@@ -87,7 +90,7 @@ def build_html() -> str:
     rows = []
     for pid, desc in EXAMPLES:
         r = cand.loc[pid]
-        b64, w, h = b64_image(Path(first.loc[pid, "file_path"]))
+        b64, w, h = b64_image(resolve_path(first.loc[pid, "file_path"]))
         ref = (f'<div class="ref"><span class="lab">Type</span>{r["true_type"]}</div>'
                f'<div class="ref"><span class="lab">Year</span>{int(r["true_bouwjaar"])} ({r["true_period"]})</div>'
                f'<div class="ref"><span class="lab">Floors</span>{int(r["true_num_floors"])}</div>')
