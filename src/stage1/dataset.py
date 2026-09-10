@@ -16,6 +16,7 @@ from typing import Literal
 import pandas as pd
 import torch
 from PIL import Image
+from src.config import resolve_path
 from torch.utils.data import Dataset
 from torchvision import transforms
 
@@ -176,7 +177,7 @@ class Stage1ImageDataset(Dataset):
         imgs = torch.zeros(MAX_IMAGES, 3, IMG_SIZE, IMG_SIZE, dtype=torch.float32)
         mask = torch.zeros(MAX_IMAGES, dtype=torch.bool)
         for i, p in enumerate(paths):
-            img = Image.open(p).convert("RGB")
+            img = Image.open(resolve_path(p)).convert("RGB")
             imgs[i] = self.transform(img)
             mask[i] = True
 

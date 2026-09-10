@@ -6,6 +6,12 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
+def resolve_path(p: str | Path) -> Path:
+    """Return an absolute path; relative inputs are taken from the project root."""
+    p = Path(p)
+    return p if p.is_absolute() else PROJECT_ROOT / p
+
+
 def load_config(config_path: str | Path | None = None) -> dict:
     """Load project configuration from a YAML file."""
     if config_path is None:

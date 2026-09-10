@@ -28,6 +28,8 @@ data/raw/tabula/*
 !data/raw/cbs_buurten_2023.parquet
 data/openfacades_output/
 data/output/
+# Street-view crops staged by src.svi_manifest / scripts/export_svi_crops.py (8.5 GB)
+data/svi/
 
 # osmnx / zensvi default cache dir (created when scripts run from repo root)
 cache/

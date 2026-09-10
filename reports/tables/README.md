@@ -8,7 +8,7 @@ Files with the `_binary` suffix are the two-class variant of the same run
 versions the thesis quotes.
 
 Environment: `uv run python -m <module>` for ETL / CPU work; conda
-`stage1-gpu` for anything that runs a vision model.
+`svi-gpu` (environment.yml) for anything that runs a vision model.
 
 ## Stage 1 — can street view read building attributes?
 

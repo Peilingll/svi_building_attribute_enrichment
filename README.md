@@ -23,15 +23,18 @@ Table-to-script map: `reports/tables/README.md`.
 
 ## Environments
 
-Two Python environments are used on purpose; do not mix them.
+The repository uses separate CPU and GPU environments. The `uv` environment
+defined in `pyproject.toml` supports data integration, LightGBM modelling, and
+result generation. A conda environment with CUDA-enabled PyTorch handles
+vision-model training, embedding extraction, and InternVL3 inference because
+these dependencies cannot be resolved in the `uv` lock file.
 
-| Environment | Used for | How |
-|---|---|---|
-| `uv` project venv (`.venv/`) | ETL, LightGBM, figures, tables (CPU) | `uv sync`, then `uv run python -m <module>` |
-| conda `stage1-gpu` | anything that runs a vision model (Stage 1 training, embeddings, VLM inference) | `conda activate stage1-gpu`, then `python -m <module>` |
+| Environment | Scope | Setup | Invocation |
+|---|---|---|---|
+| `uv` (`.venv/`) | data integration, LightGBM, tables, figures | `uv sync` | `uv run python -m <module>` |
+| conda `svi-gpu` | vision-model training, embedding extraction, InternVL3 inference | `conda env create -f environment.yml` | `conda activate svi-gpu`, then `python -m <module>` |
 
-Requirements: Python 3.13+, [uv](https://docs.astral.sh/uv/getting-started/installation/),
-a CUDA GPU for the conda environment.
+Requirements: Python 3.13 or newer for `uv`, a CUDA-capable GPU for the conda environment.
 
 ## Reproducing the experiments
 
@@ -112,7 +115,8 @@ or imported.
 │   ├── stage{1,2,3}/           # metrics JSON + prediction parquet per run
 │   ├── tables/                 # thesis tables (md/csv) + results index README
 │   └── figures/                # thesis figures (png + pdf)
-└── uv.lock, pyproject.toml     # uv environment
+├── uv.lock, pyproject.toml     # uv (CPU) environment
+└── environment.yml             # conda svi-gpu (GPU) environment
 ```
 
 ## Data sources

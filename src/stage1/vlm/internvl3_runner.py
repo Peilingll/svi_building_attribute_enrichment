@@ -20,7 +20,7 @@ Usage:
     # smoke: first 20 images only
     python -m src.stage1.vlm.internvl3_runner --split holdout --sample 20
 
-Run inside the GPU environment (conda `stage1-gpu`).
+Run inside the GPU environment (conda `svi-gpu`, see environment.yml).
 """
 
 from __future__ import annotations
@@ -34,7 +34,9 @@ import pandas as pd
 import torch
 from transformers import AutoModel, AutoTokenizer
 
+from src.config import resolve_path
 from src.stage1.vlm.parse import parse_response
+from src.svi_manifest import crop_key
 
 from src.stage1.vlm.image_utils import load_image
 
@@ -121,7 +123,7 @@ def load_done_paths(partial_path: Path) -> tuple[set[str], pd.DataFrame]:
     if not partial_path.exists():
         return set(), pd.DataFrame()
     prev = pd.read_parquet(partial_path)
-    done = set(prev["file_path"].astype(str).tolist())
+    done = {crop_key(p) for p in prev["file_path"].astype(str)}  # path layout changed once; key is stable
     logger.info("resume: found %d already-processed images in %s", len(done), partial_path.name)
     return done, prev
 
@@ -129,7 +131,7 @@ def load_done_paths(partial_path: Path) -> tuple[set[str], pd.DataFrame]:
 def inference_one(processor: InternVLChat, file_path: str) -> tuple[str | None, float, str | None]:
     t0 = time.time()
     try:
-        raw = processor.process_image(file_path, PROMPT)
+        raw = processor.process_image(str(resolve_path(file_path)), PROMPT)
     except Exception as exc:
         return None, time.time() - t0, f"inference:{type(exc).__name__}:{exc}"
     return raw, time.time() - t0, None
@@ -165,7 +167,7 @@ def run(args: argparse.Namespace) -> None:
     done_paths, existing_df = (
         load_done_paths(partial_path) if args.resume else (set(), pd.DataFrame())
     )
-    todo = todo[~todo["file_path"].astype(str).isin(done_paths)].reset_index(drop=True)
+    todo = todo[~todo["file_path"].astype(str).map(crop_key).isin(done_paths)].reset_index(drop=True)
     logger.info("after resume filter: %d images to run", len(todo))
 
     if len(todo) == 0:

@@ -20,7 +20,7 @@ Output: `data/processed/svi_manifest.parquet`
   | pand_id     | str  | BAG 16-digit zero-padded id                   |
   | panorama_id | str  | Mapillary panorama id (from `pid_` in name)   |
   | bdid        | str  | OpenFACADES OSM building id (from `bdid_`)    |
-  | file_path   | str  | absolute path to png                          |
+  | file_path   | str  | repo-relative path data/svi/<city>/<file>.png  |
   | city        | str  | amsterdam / utrecht / rotterdam / delft       |
   | aov_geo     | f64  | width of building in view, degrees (quality)  |
   | distance    | f64  | metres from camera to building (quality)      |
@@ -34,6 +34,8 @@ import logging
 import re
 from pathlib import Path
 
+import shutil
+
 import pandas as pd
 
 from src.footprint_join import spatial_join_footprints_to_bag
@@ -42,6 +44,22 @@ logger = logging.getLogger(__name__)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CITIES = ["amsterdam", "utrecht", "rotterdam", "delft"]
+SVI_DIR = REPO_ROOT / "data" / "svi"  # staged crops, one folder per city (gitignored)
+_CELL_RE = re.compile(r"[\\/](cell_\d+)[\\/]")
+
+
+def crop_key(path: str | Path) -> str:
+    """Stable identifier of one crop file: `<cell>_<pid_..._bdid_...>.png`.
+
+    OpenFACADES writes the same `pid_<pano>_bdid_<building>.png` name in every
+    grid cell that contains the building, and the crops differ between cells,
+    so the cell id is part of the identity. Works for both the original
+    OpenFACADES path and the staged data/svi/<city>/<key> path.
+    """
+    s = str(path)
+    name = Path(s).name
+    m = _CELL_RE.search(s)
+    return f"{m.group(1)}_{name}" if m else name
 FILENAME_RE = re.compile(r"^pid_(?P<pid>\d+)_bdid_(?P<bdid>\d+)\.png$")
 
 
@@ -168,6 +186,35 @@ def build_city_manifest(city: str, cap: int) -> pd.DataFrame:
     ]]
 
 
+def stage_crops(manifest: pd.DataFrame) -> pd.DataFrame:
+    """Copy every referenced crop into data/svi/<city>/ and make file_path repo-relative.
+
+    The staged name is `crop_key(source)`, so crops of the same building from
+    different grid cells stay distinct. Rows whose target file already exists
+    are not copied again, so the function is idempotent and doubles as the
+    migration for manifests that still carry absolute OpenFACADES paths.
+    """
+    out = manifest.copy()
+    new_paths: list[str] = []
+    n_copied = 0
+    for src, city in zip(out["file_path"], out["city"]):
+        src_p = Path(src)
+        rel = Path("data") / "svi" / city / crop_key(src_p)
+        dst = REPO_ROOT / rel
+        if not dst.exists():
+            if not src_p.is_absolute():
+                src_p = REPO_ROOT / src_p
+            if not src_p.exists():
+                raise FileNotFoundError(f"crop missing: {src}")
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_p, dst)
+            n_copied += 1
+        new_paths.append(rel.as_posix())
+    out["file_path"] = new_paths
+    logger.info("staged crops: %d copied; %d rows now relative to data/svi/", n_copied, len(out))
+    return out
+
+
 def build_manifest(cities: list[str], cap: int) -> pd.DataFrame:
     parts = [build_city_manifest(c, cap) for c in cities]
     parts = [p for p in parts if not p.empty]
@@ -194,6 +241,7 @@ def main() -> None:
 
     cities = CITIES if "all" in args.cities else args.cities
     manifest = build_manifest(cities, args.cap)
+    manifest = stage_crops(manifest)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     manifest.to_parquet(args.output, index=False)
