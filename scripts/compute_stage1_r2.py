@@ -5,7 +5,7 @@ over the same evaluated subset used for the published MAE (rows with a valid
 prediction). Bootstrap 95% CI uses 1,000 building-level resamples, seed 42,
 matching the convention of the existing holdout_metrics.json files.
 
-Usage: .venv/Scripts/python.exe scripts/compute_stage1_r2.py
+Usage: uv run python scripts/compute_stage1_r2.py
 Output: reports/stage1/r2_holdout.json
 """
 

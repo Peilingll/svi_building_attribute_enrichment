@@ -7,7 +7,7 @@
    the geometry, lookup and cell logic of src/stage3/htr_instrument.py
    (WWR = 0.25, same building filter as the published MAE).
 
-Usage: .venv/Scripts/python.exe scripts/compute_binary_prf_htr_r2.py
+Usage: uv run python scripts/compute_binary_prf_htr_r2.py
 Output: reports/stage3/binary_prf_htr_r2.json
 """
 

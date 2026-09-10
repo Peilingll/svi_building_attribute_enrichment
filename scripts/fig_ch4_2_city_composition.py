@@ -9,7 +9,7 @@ Layout, following the side-by-side pool/sample convention:
     row 2: TABULA-NL period -- (c) reference pool | (d) experimental sample
     row 3: EPC label        -- (e) reference pool | (f) experimental sample
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_2_city_composition.py
+Run:  uv run python scripts/fig_ch4_2_city_composition.py
 """
 
 from __future__ import annotations

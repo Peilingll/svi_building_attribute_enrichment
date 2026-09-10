@@ -8,7 +8,7 @@ both of those are already model features, so a tree model should be indifferent
 to their numeric level. This script checks that claim instead of assuming it,
 and quantifies the change for the physical (H_tr) use where it does matter.
 
-Run: .venv/Scripts/python.exe -m src.tabula.impact_check
+Run: uv run python -m src.tabula.impact_check
 """
 
 import logging

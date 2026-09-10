@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import base64
 import io
+import os
 import subprocess
 from pathlib import Path
 
@@ -31,7 +32,17 @@ REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "reports" / "figures" / "ch4"
 CAND = OUT / "F4_5_attribute_examples_candidates.csv"
 MANIFEST = REPO / "data/processed/svi_manifest.parquet"
-CHROME = Path(r"C:/Program Files/Google/Chrome/Application/chrome.exe")
+# Headless Chrome/Chromium renders the HTML table to PNG. Set CHROME_BIN to
+# override the auto-detected location.
+_CHROME_CANDIDATES = [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+]
+CHROME = Path(os.environ.get("CHROME_BIN") or next(
+    (c for c in _CHROME_CANDIDATES if Path(c).exists()), _CHROME_CANDIDATES[0]))
 
 GREEN, ORANGE, INK, GREY = "#A2AD00", "#E37222", "#1F2A37", "#6B7280"
 
@@ -112,6 +123,9 @@ def build_html() -> str:
 
 
 def render_png(html_path: Path, png_path: Path, width: int, height: int, scale: int = 2):
+    if not CHROME.exists():
+        raise FileNotFoundError(
+            f"Chrome not found at {CHROME}; set CHROME_BIN to your Chrome/Chromium binary")
     tmp = png_path.with_name(png_path.stem + "_raw.png")
     cmd = [str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars",
            f"--force-device-scale-factor={scale}", f"--window-size={width},{height}",

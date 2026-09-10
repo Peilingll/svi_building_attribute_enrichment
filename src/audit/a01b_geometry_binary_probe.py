@@ -11,7 +11,7 @@
    folds and protocol as svi_compactheid.py, only the target differs
    (the audited-out EP `Compactheid` is replaced by the 3DBAG value).
 
-Usage: .venv/Scripts/python.exe -m src.audit.a01b_geometry_binary_probe
+Usage: uv run python -m src.audit.a01b_geometry_binary_probe
 Output: reports/tables/audit/A01b_geometry_binary_probe.md
 """
 

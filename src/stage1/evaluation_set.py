@@ -18,7 +18,7 @@ Outputs
   data/processed/evaluation_pand_ids.parquet        one row per evaluated building
   data/processed/evaluation_pand_ids.checksum.txt   sha256 prefix, counts, excluded ids
 
-Run:  .venv/Scripts/python.exe -m src.stage1.evaluation_set
+Run:  uv run python -m src.stage1.evaluation_set
 """
 from __future__ import annotations
 

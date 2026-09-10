@@ -11,7 +11,7 @@ Experimental sample = pool INTERSECT svi_manifest.parquet, n = 10,086.
 The sample is a subset of the pool, so the two bars are "my sample" vs
 "the whole eligible stock", not two disjoint groups.
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_1_sample_vs_pool.py
+Run:  uv run python scripts/fig_ch4_1_sample_vs_pool.py
 """
 
 from __future__ import annotations

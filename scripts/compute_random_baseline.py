@@ -13,7 +13,7 @@ Rate-matched operating point (binary): a random score ranking marks a random
 Evaluated on the pooled hold-out (n=2,018) and the LOCO Amsterdam test pool
 (n=8,011).
 
-Usage: .venv/Scripts/python.exe scripts/compute_random_baseline.py
+Usage: uv run python scripts/compute_random_baseline.py
 Output: reports/stage2/random_baseline.json
 """
 

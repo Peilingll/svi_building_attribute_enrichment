@@ -6,7 +6,7 @@ predicted cell (predicted type + period of predicted year) matches it exactly.
 One panel per vision configuration, fixed order DINOv2 -> ResNet-50 ->
 InternVL3-2B. Cells with no hold-out buildings are shown hatched grey.
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_3_cell_recall_heatmap.py
+Run:  uv run python scripts/fig_ch4_3_cell_recall_heatmap.py
       add --vertical for F4_3_cell_recall_heatmap_vertical.{png,pdf}
       (y = construction period, x = size class)
 """

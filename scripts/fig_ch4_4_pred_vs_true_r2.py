@@ -7,7 +7,7 @@ Two rows x three columns:
 Each panel is annotated with the hold-out R^2 and MAE (same evaluated subset as
 Table 4.2; values match reports/stage1/r2_holdout.json).
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_4_pred_vs_true_r2.py
+Run:  uv run python scripts/fig_ch4_4_pred_vs_true_r2.py
       add --by-city for F4_4_pred_vs_true_r2_by_city.{png,pdf}:
       portrait layout, rows = models, cols = (year, floor count),
       points coloured by city, one shared legend.

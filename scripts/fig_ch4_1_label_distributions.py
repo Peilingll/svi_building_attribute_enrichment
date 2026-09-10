@@ -8,7 +8,7 @@ with thesis-facing panel titles and two changes:
 Experimental sample = stage1_gt.parquet INTERSECT svi_manifest.parquet,
 n = 10,086 buildings.
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_1_label_distributions.py
+Run:  uv run python scripts/fig_ch4_1_label_distributions.py
 """
 
 from __future__ import annotations

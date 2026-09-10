@@ -10,7 +10,7 @@ Data: the same hold-out prediction files as fig_ch4_3_cell_recall_heatmap.py.
 Output (new file, the recall heatmap is untouched):
   reports/figures/ch4/F4_3_period_sankey.png / .svg
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_3_period_sankey.py
+Run:  uv run python scripts/fig_ch4_3_period_sankey.py
 """
 from __future__ import annotations
 

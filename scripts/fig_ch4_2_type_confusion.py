@@ -5,7 +5,7 @@ DINOv2 -> ResNet-50 -> InternVL3-2B (same as Tables 4.2/4.3/4.6). Each cell is
 annotated with the row share and the building count. Supports the accuracy vs
 macro-F1 discussion in section 4.2.1 (e.g. the MFH row is entirely off-diagonal).
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_2_type_confusion.py
+Run:  uv run python scripts/fig_ch4_2_type_confusion.py
 """
 
 from __future__ import annotations

@@ -10,7 +10,7 @@ Reported for the 7-class task (A+..A++++ merged into A) and the binary task
 (A-C vs D-G). Anchors: M0 (development majority) below, M1 (eight-feature
 LightGBM on reference attributes) above.
 
-Usage: .venv/Scripts/python.exe scripts/compute_cell_oracle.py
+Usage: uv run python scripts/compute_cell_oracle.py
 Output: reports/stage2/cell_oracle.json
 """
 

@@ -16,7 +16,7 @@ Steps (run all, or pick with --steps a,b,...):
   figures   F4_2 type confusion, F4_3 cell recall, F4_3 pred-vs-true, period Sankey
   bycity    evaluation-set composition by study area
 
-Run:  .venv/Scripts/python.exe scripts/recompute_eval2014.py [--steps stage1,joint]
+Run:  uv run python scripts/recompute_eval2014.py [--steps stage1,joint]
 """
 from __future__ import annotations
 

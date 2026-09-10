@@ -26,7 +26,7 @@ Validation against the TABULA WebTool datasheets (2026-07-27):
     workbook. 1.7241 is the traceable library value and the conservative one;
     walls dominate H_tr, so the difference does not move any downstream number.
 
-Run: .venv/Scripts/python.exe -m src.tabula.build_lookup
+Run: uv run python -m src.tabula.build_lookup
 """
 
 import logging
