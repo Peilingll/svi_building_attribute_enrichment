@@ -14,7 +14,7 @@ __pycache__/
 # Documentation & specs (local notes, not tracked)
 doc_processed/
 
-# Large rendered HTML reports (>100MB, exceeds GitHub limit)
+# Large rendered HTML exploration reports (Am ~100 MB, Ul 36 MB); kept locally
 doc/research_processed/01_data_exploration_Am.html
 doc/research_processed/01_data_exploration_Ul.html
 
@@ -32,7 +32,8 @@ cache/
 # Model checkpoints (large binary, regeneratable from train.py)
 models/
 
-# Background training stdout/stderr logs
+# Run stdout/stderr logs (data fetch + training); the audit-trail copies
+# that matter are data/processed/<city>/step1.log
 logs/
 
 # Editable install metadata (created by pip install -e)
@@ -78,7 +79,8 @@ Thesis_reports/reviewer_comments_AD_JQ.md
 # biber save-error leftovers
 **/thesistemplate-main*/**/*.bcf-SAVE-ERROR
 
-# Retired scripts and the v1 thesis template; kept locally only
+# Retired work kept locally only: LOCO experiment, notebooks, old scripts,
+# v1/v2 thesis templates
 archive/
 
 # Codex scratch files and the thesis QA dump
