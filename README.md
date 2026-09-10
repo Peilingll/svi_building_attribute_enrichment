@@ -4,7 +4,7 @@ Code and results for a master's thesis that asks how much information street-vie
 imagery (SVI) adds when predicting Dutch residential energy-performance labels.
 Public registers (BAG, 3D BAG, EP-Online) and TABULA-NL archetypes form the
 "semi-synthetic" backbone; vision models read building attributes from street
-view; a three-stage experiment measures what each source contributes.
+view; three experiments measure what each source contributes.
 
 Study area: residential buildings in Amsterdam, Rotterdam, Utrecht and Delft.
 
@@ -32,28 +32,28 @@ Two Python environments are used on purpose; do not mix them.
 | conda `stage1-gpu` | anything that runs a vision model (Stage 1 training, embeddings, VLM inference) | `conda activate stage1-gpu`, then `python -m <module>` |
 
 Requirements: Python 3.13+, [uv](https://docs.astral.sh/uv/getting-started/installation/),
-a CUDA GPU for the conda environment. Copy `.env.example` to `.env` for API keys.
+a CUDA GPU for the conda environment.
 
 ## Reproducing the experiments
 
 ```bash
-# Stage 0: registry join per city (bbox and filters from configs/<city>.yaml)
+# Dataset construction (thesis Stage 1); bbox and filters from configs/<city>.yaml
 uv run python -m src.data_loader --config configs/amsterdam.yaml
 uv run python -m src.tabula_matcher --config configs/amsterdam.yaml
 uv run python -m src.svi_manifest
 
-# Stage 1: ground truth, splits, training, hold-out evaluation (GPU env)
+# Experiment I: ground truth, splits, training, hold-out evaluation (GPU env)
 uv run python -m src.stage1.gt_builder
 uv run python -m src.stage1.splits
 python -m src.stage1.train --model dinov2 --all-folds
 python -m src.stage1.eval_holdout --model dinov2 --ckpt <path>
 python -m src.stage1.vlm.internvl3_runner --split holdout --resume
 
-# Stage 2: feature ablation on ground-truth attributes
+# Experiment III: feature ablation on reference attributes
 uv run python -m src.stage2.run_ablation
 uv run python -m src.stage2.run_ablation --task binary
 
-# Stage 3: route comparison on the hold-out set
+# Experiment III: route comparison on the hold-out set
 python -m src.stage3.extract_embeddings          # GPU env
 uv run python -m src.stage3.run_stage3
 uv run python -m src.stage3.run_stage3 --task binary
@@ -116,17 +116,6 @@ or imported.
 └── uv.lock, pyproject.toml     # uv environment
 ```
 
-The LaTeX thesis and the dated research logs are not in this repository. They live in
-`doc_processed/` (thesis-docs repository): `thesistemplate-main-v3/` takes its figures
-from `reports/figures/`, `research_log/` holds the English logs.
-
-
-Not tracked (local only, see `.gitignore`): `data/raw/`, `data/interim/`,
-`models/`, `logs/`, `archive/` (LOCO experiment, notebooks, retired scripts,
-older thesis templates), `doc_processed/` (planning notes), `notebooks/`,
-`Thesis_reports/` (figure workshop and review notes), `doc_processed/` (thesis text,
-plans and logs; its own git repository).
-
 ## Data sources
 
 | Source | Method | Key fields |
@@ -134,7 +123,7 @@ plans and logs; its own git repository).
 | [BAG](https://www.pdok.nl/) | PDOK WFS API | pand_id, bouwjaar, geometry |
 | [3D BAG](https://3dbag.nl/) | 3D BAG WFS API | roof type, height, volume, surface areas |
 | [EP-Online](https://www.ep-online.nl/) | local CSV download (`data/raw/`, not tracked) | energy label A-G, primary fossil energy kWh/m2 |
-| [TABULA-NL](https://webtool.building-typology.eu/) | webtool workbook `data/raw/tabula/tabula-values.xlsx` (not tracked), parsed by `src/tabula/build_lookup.py` | 24 archetypes, U-values |
-| Street view | Mapillary panoramas, cropped per building with OpenFACADES (see below) | one image manifest row per view |
+| [TABULA-NL](https://webtool.building-typology.eu/) | webtool workbook `data/raw/tabula/tabula-values.xlsx`, parsed by `src/tabula/build_lookup.py` | 24 archetypes, U-values |
+| Street view | Mapillary panoramas, cropped per building with OpenFACADES (see Inputs above) | one image manifest row per view |
 
 Data dictionary for `data/processed/`: [`data/processed/README.md`](data/processed/README.md).
