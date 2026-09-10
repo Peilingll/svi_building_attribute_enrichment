@@ -1,0 +1,26 @@
+% "Software Used" page, following the four-column overview recommended in
+% the TUM Citation Guide: Program (including version), Use case, Scope, Comment.
+
+\chapter*{Software Used}
+\addcontentsline{toc}{chapter}{Software Used}
+
+The following software was used in the preparation of this thesis.
+
+\begin{table}[htbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		width = \linewidth,
+		colspec = {Q[l,m,3.2cm] Q[l,m,4.8cm] X[l] Q[l,m,1.5cm]},
+		colsep = 4pt,
+		rowsep = 3pt,
+		row{1} = {font=\bfseries},
+		hlines = {0.4pt},
+		vlines = {0.4pt},
+	}
+		Program (version) & Use case & Scope & Comment \\
+		InternVL3-2B (OpenGVLab, 2025) & Generation of zero-shot experimental predictions & Prompt engineering documented in Appendix~\ref{ch:appendix_d} & {} \\
+		Claude Code, Fable~5.1 (Anthropic, 2026) & Code assistance & Figure and table scripts in \texttt{scripts/} and \texttt{src/} & Python \\
+		Codex, GPT-5.6 Sol (OpenAI, 2026) & Grammar and spelling checks, concise wording & Entire thesis & {} \\
+	\end{tblr}
+\end{table}
