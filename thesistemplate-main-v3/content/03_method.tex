@@ -92,7 +92,7 @@ All spatial operations use the Dutch national coordinate reference system, EPSG:
 \subsection{Building Reference Record Construction}
 \label{sec:reference_dataset_construction}
 
-The reference branch constructs one reference record for each BAG building. The normalised 16-digit identifier \texttt{pand\_id} is used to join BAG construction year and footprint data to EP-Online records and 3DBAG geometry. Within EP-Online, only records for existing residential buildings with a registered energy class are retained. When several certificate records are linked to one \texttt{pand\_id}, the record with the most recent registration date is selected. The registration date indicates whether the selected record was registered during the period governed by NTA 8800, the Dutch method for determining building energy performance \parencite{NTA8800}.
+The reference branch constructs one reference record for each BAG building. The normalised 16-digit identifier \texttt{pand\_id} is used to join BAG construction year and footprint data to EP-Online records and 3DBAG geometry. Within EP-Online, only records for existing residential buildings with a registered energy class are retained. The record with the most recent registration date is selected when several certificate records are linked to one \texttt{pand\_id}.
 
 The reference floor count is taken from the reconstructed 3DBAG floor attribute. If this attribute is unavailable, floor count is estimated by dividing the median reconstructed building height by 3.0\,m and rounding the result to the nearest integer. Additional eligibility criteria for construction year, floor count, and TABULA-NL size class are listed in Table~\ref{tab:data_criteria}. Together, these steps produce one building reference record per \texttt{pand\_id} containing the reference building attributes, reconstructed geometry, and selected registered energy class.
 
@@ -171,7 +171,7 @@ Table~\ref{tab:data_criteria} provides the authoritative summary of the selectio
 
 The experimental dataset is partitioned before model fitting. This procedure separates model development from final evaluation in two steps.
 
-First, the scikit-learn \texttt{StratifiedGroupKFold} splitter generates five shuffled subsets with random seed 42 while attempting to balance the distribution of a composite stratification label \parencite{pedregosa2011}.
+First, the workflow uses the scikit-learn implementation of \texttt{StratifiedGroupKFold} to generate five shuffled subsets with random seed 42 while attempting to balance the distribution of a composite stratification label \parencite{pedregosa2011}.
 One subset is designated as the fixed holdout set, and the remaining four subsets form the development set.
 The development set is used for model fitting, validation, and model selection.
 The fixed holdout set is the predefined partition reserved for final evaluation and is not used for model fitting, hyperparameter selection, or checkpoint selection.
@@ -375,7 +375,7 @@ Renovation status is not available consistently for individual buildings, so eve
 Buildings with the same size class and construction period consequently receive the same four U-values \parencite{loga2016}. The lookup does not account for renovations or measured envelope properties of individual buildings.
 They are used as inputs to the energy class classifier and are combined with reconstructed 3DBAG envelope areas for the transmission heat transfer comparison.
 The U-values describe thermal transmittance of individual envelope elements.
-When combined with reconstructed element areas and divided by estimated floor area, they yield the floor-area-normalised transmission heat transfer coefficient $h_{tr}$ used in this study \parencite{loga2013calculation}.
+The coefficient $h_{tr}$ is calculated by summing the products of the representative U-values and their corresponding reconstructed element areas and dividing the total by estimated floor area \parencite{loga2013calculation}.
 
 \section{Stage 4: Energy Class Prediction}
 \label{sec:downstream_model}
