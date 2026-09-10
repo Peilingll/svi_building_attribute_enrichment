@@ -5,9 +5,9 @@ Reuses the Stage 1 InternVLChat + top-3 manifest machinery; only the prompt and
 the parser change (single key "energy_label"). Per-image rows; aggregation to
 per-pand_id (majority vote) is done in m2_vlm_eval.py.
 
-ENV: conda openfacades (same as the Stage 1 VLM runner — needs load_image).
-    "D:/conda_envs/openfacades/python.exe" -m src.stage3.m2_vlm_runner --split holdout --resume
-    "D:/conda_envs/openfacades/python.exe" -m src.stage3.m2_vlm_runner --split holdout --sample 20  # smoke
+Run inside the GPU environment (conda `stage1-gpu`), like the Stage 1 VLM runner:
+    python -m src.stage3.m2_vlm_runner --split holdout --resume
+    python -m src.stage3.m2_vlm_runner --split holdout --sample 20  # smoke
 """
 
 from __future__ import annotations

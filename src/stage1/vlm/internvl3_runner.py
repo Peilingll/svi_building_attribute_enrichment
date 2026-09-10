@@ -20,8 +20,7 @@ Usage:
     # smoke: first 20 images only
     python -m src.stage1.vlm.internvl3_runner --split holdout --sample 20
 
-Use the conda env that already has OpenFACADES sibling deps for `load_image`:
-    "D:/conda_envs/openfacades/python.exe" -m src.stage1.vlm.internvl3_runner ...
+Run inside the GPU environment (conda `stage1-gpu`).
 """
 
 from __future__ import annotations
@@ -38,9 +37,7 @@ from transformers import AutoModel, AutoTokenizer
 
 from src.stage1.vlm.parse import parse_response
 
-OPENFACADES_SRC = Path("D:/ITBE/Thesis/OpenFACADES/src")
-sys.path.insert(0, str(OPENFACADES_SRC))
-from openfacades.vlm.base import load_image  # noqa: E402
+from src.stage1.vlm.image_utils import load_image
 
 logger = logging.getLogger(__name__)
 
