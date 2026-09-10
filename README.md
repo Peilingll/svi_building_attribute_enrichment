@@ -1,4 +1,4 @@
-# Semi-Synthetic Building Energy Dataset
+# SVI Building Attribute Enrichment
 
 Code and results for a master's thesis that asks how much information street-view
 imagery (SVI) adds when predicting Dutch residential energy-performance labels.

@@ -1,7 +1,7 @@
 [project]
-name = "semi-synthetic-building-energy"
+name = "svi_building_attribute_enrichment"
 version = "0.1.0"
-description = "Add your description here"
+description = "Street-view imagery as a source of building attributes for archetype-based building stock enrichment (MSc thesis, TUM)"
 requires-python = ">=3.13"
 dependencies = [
     "folium>=0.20.0",
