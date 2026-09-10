@@ -93,13 +93,18 @@ Each module carries its own usage notes in the docstring.
 │   ├── tables/                 # thesis tables (md/csv) + results index README
 │   └── figures/                # thesis figures (png + pdf)
 ├── doc/research_log/           # dated research logs
-├── Thesis_reports/             # figure sources, citation full texts, audit notes
 └── thesistemplate-main-v3/     # LaTeX thesis
 ```
 
+Note: `content/04_experiments.tex` includes `../Thesis_reports/fig_ch4_svi_examples.png`,
+which `scripts/fig_ch4_svi_examples_simple.py` writes into the untracked
+`Thesis_reports/`. Run that script once before building the thesis from a fresh clone.
+
 Not tracked (local only, see `.gitignore`): `data/raw/`, `data/interim/`,
 `models/`, `logs/`, `archive/` (LOCO experiment, notebooks, retired scripts,
-older thesis templates), `doc_processed/` (planning notes), `notebooks/`.
+older thesis templates), `doc_processed/` (planning notes), `notebooks/`,
+`Thesis_reports/` (figure workshop and review notes; the LaTeX source still
+reads one figure from it, see below).
 
 ## Data sources
 

@@ -69,9 +69,8 @@ output/
 .codex-zotero-gap/
 tmp/
 
-# Local review / audit notes (not tracked)
-Thesis_reports/intro_citation_audit.md
-Thesis_reports/reviewer_comments_AD_JQ.md
+# Thesis figure workshop, review notes, citation full texts (local only)
+Thesis_reports/
 
 # Codex build output inside any thesis template copy
 **/thesistemplate-main*/.codex-build/
