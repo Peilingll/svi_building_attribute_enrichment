@@ -93,11 +93,12 @@ Each module carries its own usage notes in the docstring.
 │   ├── stage{1,2,3}/           # metrics JSON + prediction parquet per run
 │   ├── tables/                 # thesis tables (md/csv) + results index README
 │   └── figures/                # thesis figures (png + pdf)
-└── doc/research_log/           # dated research logs
+└── configs/, config.yaml       # see top
 ```
 
-The LaTeX thesis is not in this repository. It lives in `doc_processed/thesistemplate-main-v3/`,
-part of the separate thesis-docs repository, and takes its figures from `reports/figures/`.
+The LaTeX thesis and the dated research logs are not in this repository. They live in
+`doc_processed/` (thesis-docs repository): `thesistemplate-main-v3/` takes its figures
+from `reports/figures/`, `research_log/` holds the English logs.
 
 
 Not tracked (local only, see `.gitignore`): `data/raw/`, `data/interim/`,

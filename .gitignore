@@ -14,8 +14,8 @@ __pycache__/
 # Documentation & specs (local notes, not tracked)
 doc_processed/
 
-# MVP-era rendered HTML exploration reports; kept locally (archive/doc_research_processed/)
-doc/research_processed/
+# Research notes and logs live in doc_processed/ (separate thesis-docs repo)
+doc/
 
 # Notebook backups (kept locally only)
 *.backup.ipynb
