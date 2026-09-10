@@ -20,8 +20,12 @@ doc/
 # Notebook backups (kept locally only)
 *.backup.ipynb
 
-# Data
-data/raw/
+# Data: raw inputs stay out except the three small open-data files below
+data/raw/*
+!data/raw/tabula/
+data/raw/tabula/*
+!data/raw/tabula/tabula-values.xlsx
+!data/raw/cbs_buurten_2023.parquet
 data/openfacades_output/
 data/output/
 
@@ -39,8 +43,9 @@ logs/
 src/*.egg-info/
 
 
-# Derived EP-Online slice (regenerate with src.audit.ep_raw; source is data/raw/)
-data/interim/
+# Derived EP-Online four-city slice is tracked (13 MB); anything else in interim/ is not
+data/interim/*
+!data/interim/ep_four_cities.parquet
 
 # MVP-era Gemini VLM test set (92 MB of Delft PNGs); the Gemini path is archived
 data/processed/mvp_vlm_testing_data_gmini/
