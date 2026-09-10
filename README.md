@@ -93,7 +93,7 @@ Each module carries its own usage notes in the docstring.
 │   ├── stage{1,2,3}/           # metrics JSON + prediction parquet per run
 │   ├── tables/                 # thesis tables (md/csv) + results index README
 │   └── figures/                # thesis figures (png + pdf)
-└── configs/, config.yaml       # see top
+└── uv.lock, pyproject.toml     # uv environment
 ```
 
 The LaTeX thesis and the dated research logs are not in this repository. They live in
