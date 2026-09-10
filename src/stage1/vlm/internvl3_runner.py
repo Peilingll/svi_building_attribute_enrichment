@@ -20,7 +20,7 @@ Usage:
     # smoke: first 20 images only
     python -m src.stage1.vlm.internvl3_runner --split holdout --sample 20
 
-Run inside the GPU environment (conda `stage1-gpu`).
+Run inside the GPU environment (conda `svi-gpu`, see environment.yml).
 """
 
 from __future__ import annotations

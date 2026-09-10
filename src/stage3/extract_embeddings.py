@@ -4,7 +4,7 @@ Runs the Stage 1 frozen DINOv2 backbone (no training) over each building's
 street-view images, mean-pools over valid images (same aggregation as Stage 1),
 and saves one 768-d embedding per building. These feed the M2 end-to-end head.
 
-ENV: conda `stage1-gpu` (torch + CUDA). Deterministic (val) transforms.
+ENV: conda `svi-gpu` (environment.yml; torch + CUDA). Deterministic (val) transforms.
 
 Usage:
     python -m src.stage3.extract_embeddings

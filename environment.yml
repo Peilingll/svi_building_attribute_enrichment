@@ -1,0 +1,28 @@
+# GPU environment for vision-model training, embedding extraction and
+# InternVL3 inference. CPU-side work uses the uv environment (pyproject.toml).
+#   conda env create -f environment.yml
+#   conda activate svi-gpu
+name: svi-gpu
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu124
+      - torch==2.6.0
+      - torchvision==0.21.0
+      - timm==1.0.27
+      - transformers==4.37.2
+      - tokenizers==0.15.2
+      - huggingface_hub<1
+      - accelerate==1.13.0
+      - einops==0.8.2
+      - sentencepiece==0.2.1
+      - safetensors==0.7.0
+      - pandas
+      - pyarrow
+      - scikit-learn
+      - lightgbm
+      - pillow
+      - tqdm

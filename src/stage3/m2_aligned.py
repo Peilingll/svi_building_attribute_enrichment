@@ -7,7 +7,7 @@ Hold-out: pick the best fold by val energy macro-F1 (same protocol as
 eval_holdout.py), evaluate once on the hold-out, restricted to the same common
 set as Stage 3 M1/M3, and compare.
 
-ENV: conda stage1-gpu.
+ENV: conda `svi-gpu` (environment.yml).
     python -m src.stage3.m2_aligned --all-folds
 """
 
