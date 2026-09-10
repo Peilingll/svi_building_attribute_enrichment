@@ -62,6 +62,7 @@ See `audit/README.md`. Scripts: `src/audit/a0*.py`.
 | folder | script |
 |---|---|
 | `ch4/F4_1_*`, `F4_2_*`, `F4_3_*`, `F4_4_*` | `scripts/fig_ch4_*.py`; eval2014 variants via `scripts/recompute_eval2014.py --steps figures` |
+| `ch4/F4_5_attribute_examples*` | `scripts/fig_ch4_svi_examples_simple.py` (needs Chrome); the `_candidates.csv` beside it lists the six buildings and their predictions |
 | `audit/A02_*`, `A03_*` | `src/audit/a02_ep1_ep2.py`, `src/audit/a03_within_cell_labels.py` |
 | `stage1/**` | `scripts/figs_stage1_{dataset,dinov2,resnet,vlm,comparison}.py` |
 | `stage3/**` | `scripts/figs_stage3_routes.py` |

@@ -1,7 +1,7 @@
-"""Fig. 4.x (simplified) -- six holdout examples: image | Reference | DINOv2 | ResNet-50 | InternVL3.
+"""Fig. 4.5 -- six hold-out examples: image | Reference | DINOv2 | ResNet-50 | InternVL3.
 
-Reads the same six buildings as Thesis_reports/fig_ch4_svi_examples.png from
-Thesis_reports/fig_ch4_svi_examples_candidates/candidates.csv and the first
+Reads the six buildings listed in EXAMPLES below, their per-model predictions
+from reports/figures/ch4/F4_5_attribute_examples_candidates.csv, and the first
 retained crop of each building from data/processed/svi_manifest.parquet.
 
 Marks per attribute (three rows per building):
@@ -9,10 +9,13 @@ Marks per attribute (three rows per building):
   year   correct if predicted year falls in the reference TABULA-NL period
   floors correct if round(predicted floors) == reference floor count
 
-Outputs (not yet wired into the LaTeX):
-  Thesis_reports/fig_ch4_svi_examples_simple.html / .png
+Outputs:
+  reports/figures/ch4/F4_5_attribute_examples.html / .png
+  (copy the .png to thesistemplate-main-v3/figures/fig/fig_4_5_attribute_examples.png)
 
-Run:  .venv/Scripts/python.exe scripts/fig_ch4_svi_examples_simple.py
+Needs Chrome for the headless render (CHROME below).
+
+Run:  uv run python scripts/fig_ch4_svi_examples_simple.py
 """
 from __future__ import annotations
 
@@ -25,8 +28,8 @@ import pandas as pd
 from PIL import Image, ImageChops
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "Thesis_reports"
-CAND = OUT / "fig_ch4_svi_examples_candidates" / "candidates.csv"
+OUT = REPO / "reports" / "figures" / "ch4"
+CAND = OUT / "F4_5_attribute_examples_candidates.csv"
 MANIFEST = REPO / "data/processed/svi_manifest.parquet"
 CHROME = Path(r"C:/Program Files/Google/Chrome/Application/chrome.exe")
 
@@ -127,9 +130,9 @@ def render_png(html_path: Path, png_path: Path, width: int, height: int, scale: 
 
 def main():
     html = build_html()
-    hp = OUT / "fig_ch4_svi_examples_simple.html"
+    hp = OUT / "F4_5_attribute_examples.html"
     hp.write_text(html, encoding="utf-8")
-    render_png(hp, OUT / "fig_ch4_svi_examples_simple.png", 1620, 2700)
+    render_png(hp, OUT / "F4_5_attribute_examples.png", 1620, 2700)
     print("ok")
 
 
