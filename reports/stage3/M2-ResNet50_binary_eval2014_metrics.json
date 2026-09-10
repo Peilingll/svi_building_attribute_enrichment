@@ -1,0 +1,69 @@
+{
+  "task": "binary",
+  "n_eval": 2014,
+  "macro_f1": 0.5656,
+  "quadratic_kappa": 0.1312,
+  "accuracy": 0.636,
+  "balanced_accuracy": 0.5656,
+  "mcc": 0.1312,
+  "roc_auc": 0.6145,
+  "pr_auc": 0.4034,
+  "per_class": {
+    "A-C": {
+      "precision": 0.7408,
+      "recall": 0.7403,
+      "f1": 0.7405,
+      "support": 1413
+    },
+    "D-G": {
+      "precision": 0.3904,
+      "recall": 0.391,
+      "f1": 0.3907,
+      "support": 601
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "A-C",
+      "D-G"
+    ],
+    "matrix": [
+      [
+        1046,
+        367
+      ],
+      [
+        366,
+        235
+      ]
+    ]
+  },
+  "bootstrap_95ci": {
+    "macro_f1": {
+      "mean": 0.5654566808649825,
+      "lo": 0.5436,
+      "hi": 0.5871,
+      "n_boot_valid": 1000
+    },
+    "quadratic_kappa": {
+      "mean": 0.13110809810936558,
+      "lo": 0.0875,
+      "hi": 0.1743,
+      "n_boot_valid": 1000
+    },
+    "balanced_accuracy": {
+      "mean": 0.5656081218304533,
+      "lo": 0.5433,
+      "hi": 0.5872,
+      "n_boot_valid": 1000
+    },
+    "roc_auc": {
+      "mean": 0.6146847556719245,
+      "lo": 0.5861,
+      "hi": 0.64,
+      "n_boot_valid": 1000
+    }
+  },
+  "route": "M2-ResNet50_binary",
+  "n_eval_restricted": 2014
+}

@@ -1,3 +1,76 @@
-# Spec documents
-spec_doc/
-coding_spec.md
+# Virtual environment
+.venv/
+__pycache__/
+
+# Local agent/tool state
+.claude/
+.codex/
+
+# Secrets / API keys
+.env
+.env.local
+.env.*.local
+
+# Documentation & specs (local notes, not tracked)
+doc_processed/
+
+# Research notes and logs live in doc_processed/ (separate thesis-docs repo)
+doc/
+
+# Notebook backups (kept locally only)
+*.backup.ipynb
+
+# Data: raw inputs stay out except the three small open-data files below
+data/raw/*
+!data/raw/tabula/
+data/raw/tabula/*
+!data/raw/tabula/tabula-values.xlsx
+!data/raw/cbs_buurten_2023.parquet
+data/openfacades_output/
+data/output/
+
+# osmnx / zensvi default cache dir (created when scripts run from repo root)
+cache/
+
+# Model checkpoints (large binary, regeneratable from train.py)
+models/
+
+# Run stdout/stderr logs (data fetch + training); the audit-trail copies
+# that matter are data/processed/<city>/step1.log
+logs/
+
+# Editable install metadata (created by pip install -e)
+src/*.egg-info/
+
+
+# Derived EP-Online four-city slice is tracked (13 MB); anything else in interim/ is not
+data/interim/*
+!data/interim/ep_four_cities.parquet
+
+# MVP-era Gemini VLM test set (92 MB of Delft PNGs); the Gemini path is archived
+data/processed/mvp_vlm_testing_data_gmini/
+
+# OpenFACADES Phase 2 VLM inference outputs; that branch is not part of the thesis
+data/processed/phase_2_openfacade_vlm_pipeline/
+
+# LaTeX draft previews
+output/
+
+# The LaTeX thesis lives in doc_processed/ (separate thesis-docs repo)
+thesistemplate-main*/
+
+# Scratch: paper full-text dumps for Zotero gap check, and temporary PDFs
+.codex-zotero-gap/
+tmp/
+
+# Thesis figure workshop, review notes, citation full texts (local only)
+Thesis_reports/
+
+
+# Retired work kept locally only: LOCO experiment, notebooks, old scripts,
+# v1/v2 thesis templates
+archive/
+
+# Codex scratch files
+.codex-tmp/
+.uv-cache-codex/
