@@ -124,6 +124,6 @@ or imported.
 | [3D BAG](https://3dbag.nl/) | 3D BAG WFS API | roof type, height, volume, surface areas |
 | [EP-Online](https://www.ep-online.nl/) | local CSV download (`data/raw/`, not tracked) | energy label A-G, primary fossil energy kWh/m2 |
 | [TABULA-NL](https://webtool.building-typology.eu/) | webtool workbook `data/raw/tabula/tabula-values.xlsx`, parsed by `src/tabula/build_lookup.py` | 24 archetypes, U-values |
-| Street view | Mapillary panoramas, cropped per building with OpenFACADES (see Inputs above) | one image manifest row per view |
+| Street view | Mapillary panoramas, cropped per building with [OpenFACADES](https://github.com/seshing/OpenFACADES) (Liang et al., 2025, ISPRS J. Photogramm.) | one image manifest row per view |
 
 Data dictionary for `data/processed/`: [`data/processed/README.md`](data/processed/README.md).
