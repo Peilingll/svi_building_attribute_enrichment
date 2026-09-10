@@ -1,8 +1,8 @@
-"""Wrapper around OpenFACADES for the VLM pipeline.
+"""Map OpenFACADES building footprints to BAG pand_id by centroid containment.
 
-Phase B scope: only `spatial_join_footprints_to_bag` is implemented — validates
-that OpenFACADES `building_id` maps to BAG `pand_id` via centroid containment.
-Remaining functions (VLM inference, aggregation) will be added in Phase C.
+Used by `src/svi_manifest.py` to resolve the `bdid` in every street-view crop
+filename to the BAG building it shows. Can also be run as a CLI to write the
+mapping CSV for one city.
 """
 
 from __future__ import annotations
@@ -57,13 +57,13 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--bag-geom",
-        default="data/processed/bag_3dbag_ep_joined.parquet",
-        help="BAG parquet with pand_id + geometry (EPSG:28992)",
+        required=True,
+        help="BAG parquet with pand_id + geometry (EPSG:28992), e.g. data/processed/<city>/bag_3dbag_ep_joined.parquet",
     )
     parser.add_argument(
         "--residential",
-        default="data/processed/residential_tabula_matched.parquet",
-        help="BAG parquet restricted to residential buildings",
+        required=True,
+        help="BAG parquet restricted to residential buildings, e.g. data/processed/<city>/residential_tabula_matched.parquet",
     )
     parser.add_argument("--out", required=True, help="Output CSV path")
     args = parser.parse_args()

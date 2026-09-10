@@ -42,7 +42,7 @@ LADDER = ["A++++", "A+++", "A++", "A+", "A", "B", "C", "D", "E", "F", "G"]
 # Merged 7-class ladder the models actually use (stage2.features).
 LADDER7 = ["A", "B", "C", "D", "E", "F", "G"]
 
-# Tableau-10 style ramp, best (green) -> worst (red); matches notebooks/_stage3_plot.py palette family.
+# Tableau-10 style ramp, best (green) -> worst (red); matches scripts/_stage3_plot.py palette family.
 CLASS_COLORS = ["#1B7837", "#4DAF4A", "#A6D96A", "#D9EF8B", "#FFFFBF",
                 "#FEE08B", "#FDAE61", "#F46D43", "#E45756", "#C13639", "#7F0000"]
 

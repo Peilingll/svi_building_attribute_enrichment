@@ -14,9 +14,8 @@ __pycache__/
 # Documentation & specs (local notes, not tracked)
 doc_processed/
 
-# Large rendered HTML exploration reports (Am ~100 MB, Ul 36 MB); kept locally
-doc/research_processed/01_data_exploration_Am.html
-doc/research_processed/01_data_exploration_Ul.html
+# MVP-era rendered HTML exploration reports; kept locally (archive/doc_research_processed/)
+doc/research_processed/
 
 # Notebook backups (kept locally only)
 *.backup.ipynb

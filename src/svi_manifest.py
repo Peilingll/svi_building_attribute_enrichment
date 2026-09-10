@@ -6,7 +6,7 @@ For each of the four cities (Amsterdam, Utrecht, Rotterdam, Delft):
    for cropped per-building images named `pid_<panorama_id>_bdid_<bdid>.png`.
 2. Resolve `bdid` (OpenFACADES building_id) to BAG `pand_id` via
    `merged/bag_openfacades_id_mapping.csv` if present, otherwise compute it
-   on the fly with `spatial_join_footprints_to_bag()` from vlm_pipeline.py and
+   on the fly with `spatial_join_footprints_to_bag()` from footprint_join.py and
    cache the result.
 3. Attach `aov_geo` (degrees of building width in view) and `distance` (m to
    building) from `merged/aov.csv` as image-quality proxies.
@@ -36,7 +36,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.vlm_pipeline import spatial_join_footprints_to_bag
+from src.footprint_join import spatial_join_footprints_to_bag
 
 logger = logging.getLogger(__name__)
 
