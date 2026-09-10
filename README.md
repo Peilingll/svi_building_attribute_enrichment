@@ -66,6 +66,32 @@ uv run python scripts/fig_ch4_1_label_distributions.py
 
 Each module carries its own usage notes in the docstring.
 
+## Inputs not included in the repository
+
+Everything under `data/raw/`, `data/interim/`, `data/openfacades_output/` and
+`models/` is excluded, either for licensing reasons or because it is large and
+regenerable. Reviewers need the following only for the stages marked below.
+
+| input | where it comes from | put it at | needed for |
+|---|---|---|---|
+| EP-Online certificate export (CSV, snapshot 2026-04-01) | open data at ep-online.nl | `data/raw/v20260401_v4_csv/v20260401_v4_csv.csv` | Stage 0 registry join, `src.stage2.extract_kwh`, `src.audit.*` |
+| TABULA-NL workbook | TABULA WebTool, NL country data | `data/raw/tabula/tabula-values.xlsx` | `src.tabula.build_lookup` only (the resulting `tabula_nl.csv` is tracked) |
+| CBS neighbourhood polygons 2023 | fetched automatically from PDOK WFS by `src.stage2.m1_plus_fullstock` | `data/raw/cbs_buurten_2023.parquet` | the M1+ full-stock experiment |
+| Street-view crops | Mapillary panoramas processed with [OpenFACADES](https://github.com/seshing/OpenFACADES) into per-building crops; not redistributable under the Mapillary terms | `data/openfacades_output/phase_c_<city>_grid/` (paths recorded in `svi_manifest.parquet`) | Stage 1 training, embedding extraction and VLM inference |
+| Trained checkpoints | produced by `src.stage1.train` | `models/stage1/*.pt` | Stage 1 hold-out evaluation and embedding extraction |
+
+What can be reproduced without any of these: Stage 2 in full, Stage 3 in full
+(the Stage 1 hold-out predictions, per-image VLM outputs and DINOv2 embeddings
+it consumes are tracked under `reports/`), every audit that reads
+`data/processed/`, and every table and figure. Stage 1 itself (training the
+vision models and running InternVL3) needs the street-view crops and a GPU;
+its outputs are tracked so the downstream stages do not depend on rerunning it.
+
+OpenFACADES is used as the image acquisition pipeline only. The code here
+reads its output folder layout (`src/svi_manifest.py`) and maps its building
+ids to BAG (`src/footprint_join.py`); no OpenFACADES code or model weights are
+imported.
+
 ## Repository layout
 
 ```
@@ -115,6 +141,6 @@ plans and logs; its own git repository).
 | [3D BAG](https://3dbag.nl/) | 3D BAG WFS API | roof type, height, volume, surface areas |
 | [EP-Online](https://www.ep-online.nl/) | local CSV download (`data/raw/`, not tracked) | energy label A-G, primary fossil energy kWh/m2 |
 | [TABULA-NL](https://webtool.building-typology.eu/) | webtool workbook `data/raw/tabula/tabula-values.xlsx` (not tracked), parsed by `src/tabula/build_lookup.py` | 24 archetypes, U-values |
-| Street view | Mapillary panoramas, cropped per building | one image manifest row per view |
+| Street view | Mapillary panoramas, cropped per building with OpenFACADES (see below) | one image manifest row per view |
 
 Data dictionary for `data/processed/`: [`data/processed/README.md`](data/processed/README.md).
