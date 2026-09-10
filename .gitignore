@@ -48,21 +48,11 @@ data/processed/mvp_vlm_testing_data_gmini/
 # OpenFACADES Phase 2 VLM inference outputs; that branch is not part of the thesis
 data/processed/phase_2_openfacade_vlm_pipeline/
 
-# LaTeX draft previews (rebuild from thesistemplate-main/)
+# LaTeX draft previews
 output/
 
-# LaTeX build artifacts (scoped: pipeline .log files elsewhere stay tracked)
-**/thesistemplate-main*/**/*.aux
-**/thesistemplate-main*/**/*.log
-**/thesistemplate-main*/**/*.toc
-**/thesistemplate-main*/**/*.lof
-**/thesistemplate-main*/**/*.lot
-**/thesistemplate-main*/**/*.out
-**/thesistemplate-main*/**/*.bbl
-**/thesistemplate-main*/**/*.blg
-**/thesistemplate-main*/**/*.bcf
-**/thesistemplate-main*/**/*.run.xml
-**/thesistemplate-main*/**/*.synctex.gz
+# The LaTeX thesis lives in doc_processed/ (separate thesis-docs repo)
+thesistemplate-main*/
 
 # Scratch: paper full-text dumps for Zotero gap check, and temporary PDFs
 .codex-zotero-gap/
@@ -71,17 +61,11 @@ tmp/
 # Thesis figure workshop, review notes, citation full texts (local only)
 Thesis_reports/
 
-# Codex build output inside any thesis template copy
-**/thesistemplate-main*/.codex-build/
-
-# biber save-error leftovers
-**/thesistemplate-main*/**/*.bcf-SAVE-ERROR
 
 # Retired work kept locally only: LOCO experiment, notebooks, old scripts,
 # v1/v2 thesis templates
 archive/
 
-# Codex scratch files and the thesis QA dump
+# Codex scratch files
 .codex-tmp/
 .uv-cache-codex/
-thesistemplate-main-v3/thesis_qa.txt

@@ -11,7 +11,7 @@ Marks per attribute (three rows per building):
 
 Outputs:
   reports/figures/ch4/F4_5_attribute_examples.html / .png
-  (copy the .png to thesistemplate-main-v3/figures/fig/fig_4_5_attribute_examples.png)
+  (copy the .png to doc_processed/thesistemplate-main-v3/figures/fig/fig_4_5_attribute_examples.png)
 
 Needs Chrome for the headless render (CHROME below).
 
